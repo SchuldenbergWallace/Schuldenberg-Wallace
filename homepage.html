@@ -116,8 +116,11 @@
             investments.forEach(inv => {
                 const minReturn = (amount * inv.min / 100).toFixed(2);
                 const maxReturn = (amount * inv.max / 100).toFixed(2);
+                const percentageStr = minReturn === maxReturn ? 
+                    `(${inv.min}%)` : 
+                    `(${inv.min}% - ${inv.max}%)`;
                 resultHTML += `<div class="result-item">
-                    <strong>${inv.name}:</strong> 
+                    <strong>${inv.name} ${percentageStr}:</strong> 
                     ${minReturn === maxReturn ? 
                         `$${minReturn}` : 
                         `$${minReturn} - $${maxReturn}`}
