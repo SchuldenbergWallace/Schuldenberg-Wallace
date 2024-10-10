@@ -3,249 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schuldenberg & Wallace - Consulenza Finanziaria d'Eccellenza</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <title>Calcolatore di Investimenti</title>
     <style>
-        body, html {
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
-            color: #333;
-            background-color: #f8f9fa;
-        }
-        .header {
-            background-color: #1a5f7a;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        .logo {
-            max-width: 200px;
-            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        section {
-            margin-bottom: 60px;
-        }
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
         }
         h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-        h2 {
-            font-size: 2.5em;
-            margin-bottom: 30px;
+            color: #333;
             text-align: center;
-            color: #1a5f7a;
+            margin-bottom: 1.5rem;
         }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+        .input-group {
+            margin-bottom: 1.5rem;
         }
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
         }
-        .card:hover {
-            transform: translateY(-10px);
-        }
-        .founder img, .testimonial img {
+        input[type="number"], select {
             width: 100%;
-            max-width: 300px;
-            height: auto;
-            object-fit: cover;
-            margin-bottom: 20px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
         }
-        .cta {
-            text-align: center;
-            margin-top: 40px;
-        }
-        .cta-button {
-            background-color: #e63946;
+        button {
+            background-color: #4CAF50;
             color: white;
-            padding: 15px 30px;
-            font-size: 1.2em;
             border: none;
-            border-radius: 5px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s;
-            font-family: 'Roboto', sans-serif;
-        }
-        .cta-button:hover {
-            background-color: #c1121f;
-        }
-        .chart-container {
             width: 100%;
-            max-width: 600px;
-            margin: 0 auto 60px;
+            transition: background-color 0.3s;
         }
-        @media (max-width: 1024px) {
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        button:hover {
+            background-color: #45a049;
         }
-        @media (max-width: 768px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
+        .results {
+            margin-top: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            padding: 1rem;
+        }
+        .result-item {
+            margin-bottom: 0.5rem;
+        }
+        .result-item strong {
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <h1>Schuldenberg & Wallace</h1>
-        <p>Consulenza Finanziaria di Eccellenza</p>
-    </header>
-
-    <main class="container">
-        <section id="founders">
-            <h2>I Fondatori</h2>
-            <div class="grid">
-                <div class="card founder">
-                    <img src="https://media.discordapp.net/attachments/1290584851065602124/1290645385852751896/immagine-removebg-preview.png?ex=66fd36af&is=66fbe52f&hm=2d6e8d9a6fcb92de7b5bc10b48606c0ed1bfb215fbdd89756d8bf36879da3796&=&format=webp&quality=lossless&width=925&height=677" alt="Chuck Schuldenberg">
-                    <h3>Chuck Schuldenberg</h3>
-                    <p>Esperienza e professionalità, sempre a servizio del cliente</p>
-                </div>
-                <div class="card founder">
-                    <img src="https://media.discordapp.net/attachments/1290584851065602124/1290645385517469757/ww.png?ex=66fd36ae&is=66fbe52e&hm=924e257a2879f7d9c5045a03b74534707f1cb1e68ae4406b73d7fc944bd9b470&=&format=webp&quality=lossless&width=692&height=562" alt="Edward Wallace">
-                    <h3>Edward Wallace</h3>
-                    <p>Edward ha guidato numerose aziende verso il successo finanziario, combinando innovazione e strategie collaudate.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="services">
-            <h2>I Nostri Servizi</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Pianificazione Finanziaria</h3>
-                    <p>Strategie personalizzate per raggiungere i tuoi obiettivi finanziari a breve e lungo termine.</p>
-                </div>
-                <div class="card">
-                    <h3>Gestione Patrimoniale</h3>
-                    <p>Ottimizzazione e protezione del tuo patrimonio con un approccio olistico e diversificato.</p>
-                </div>
-                <div class="card">
-                    <h3>Consulenza Aziendale</h3>
-                    <p>Soluzioni innovative per la crescita, l'espansione e il successo della tua impresa.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="performance">
-            <h2>Il Nostro Impatto</h2>
-            <div class="chart-container">
-                <canvas id="performanceChart"></canvas>
-            </div>
-        </section>
-
-        <section id="success-stories">
-            <h2>Storie di Successo</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Startup "Vinnie&Jones"</h3>
-                    <p>Abbiamo aiutato la startup tecnologica "Vinnie&Jones" a quadruplicare il suo fatturato in soli 18 mesi attraverso una strategia di investimento mirata.</p>
-                </div>
-                <div class="card">
-                    <h3>Pianificazione Pensionistica</h3>
-                    <p>Un cliente (Russell Turner) è riuscito ad anticipare la pensione di 5 anni grazie al nostro piano di risparmio e investimento personalizzato.</p>
-                </div>
-                <div class="card">
-                    <h3>Espansione Aziendale</h3>
-                    <p>Abbiamo guidato l' azienda manifatturiera "Ben Bradlee & Sons" nell'espansione internazionale, aumentando i profitti del 200% in 3 anni.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="testimonials">
-            <h2>Cosa Dicono i Nostri Clienti</h2>
-            <div class="grid">
-                <div class="card testimonial">
-                    <img src="/api/placeholder/150/150" alt="">
-                    <p>"Schuldenberg & Wallace hanno trasformato la mia visione finanziaria in realtà. Non potrei essere più soddisfatto!"</p>
-                    <p><strong>- Tio Molina, Imprenditore</strong></p>
-                </div>
-                <div class="card testimonial">
-                    <img src="/api/placeholder/150/150" alt="">
-                    <p>"La loro esperienza e dedizione sono ineguagliabili. Hanno superato ogni mia aspettativa."</p>
-                    <p><strong>- Dean Reed, CEO</strong></p>
-                </div>
-            </div>
-        </section>
-
-        <div class="cta">
-            <button class="cta-button">Richiedi una Consulenza Gratuita</button>
+    <div class="container">
+        <h1>Calcolatore di Investimenti</h1>
+        <div class="input-group">
+            <label for="amount">Importo in Dollari ($):</label>
+            <input type="number" id="amount" min="0" step="0.01" required>
         </div>
-    </main>
+        <div class="input-group">
+            <label for="convention">Convenzione:</label>
+            <select id="convention">
+                <option value="no">No</option>
+                <option value="yes">Sì</option>
+            </select>
+        </div>
+        <button onclick="calculateInvestment()">Calcola Investimento</button>
+        <div class="results" id="results"></div>
+    </div>
 
     <script>
-        gsap.registerPlugin(ScrollTrigger);
+        function calculateInvestment() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const convention = document.getElementById('convention').value;
+            const results = document.getElementById('results');
 
-        gsap.from(".header", {duration: 1, y: -50, opacity: 0, ease: "power3.out"});
-        
-        gsap.utils.toArray('section').forEach((section) => {
-            gsap.from(section, {
-                scrollTrigger: {
-                    trigger: section,
-                    start: "top bottom-=100px",
-                },
-                y: 50,
-                opacity: 0,
-                duration: 1,
-                ease: "power3.out"
-            });
-        });
-
-        gsap.from(".cta-button", {
-            scrollTrigger: {
-                trigger: ".cta",
-                start: "top bottom-=100px",
-            },
-            scale: 0.5,
-            opacity: 0,
-            duration: 0.5,
-            ease: "back.out(1.7)"
-        });
-
-        // Performance Chart
-        const ctx = document.getElementById('performanceChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['2020', '2021', '2022', '2023', '2024'],
-                datasets: [{
-                    label: 'Rendimento Medio dei Clienti',
-                    data: [5, 7, 12, 15, 18],
-                    borderColor: '#1a5f7a',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Rendimento (%)'
-                        }
-                    }
-                }
+            if (isNaN(amount) || amount <= 0) {
+                results.innerHTML = '<p style="color: red;">Per favore, inserisci un importo valido.</p>';
+                return;
             }
-        });
+
+            let investments = [
+                {name: "Basso Rischio - 14 giorni", min: 25, max: 25},
+                {name: "Basso Rischio - 21 giorni", min: 37, max: 37},
+                {name: "Alto Rischio - 14 giorni", min: 23, max: 30},
+                {name: "Alto Rischio - 21 giorni", min: 34, max: 45}
+            ];
+
+            if (convention === 'yes') {
+                investments[2].min = investments[2].max = 30;
+                investments[3].min = investments[3].max = 45;
+            }
+
+            let resultHTML = '';
+            investments.forEach(inv => {
+                const minReturn = (amount * inv.min / 100).toFixed(2);
+                const maxReturn = (amount * inv.max / 100).toFixed(2);
+                resultHTML += `<div class="result-item">
+                    <strong>${inv.name}:</strong> 
+                    ${minReturn === maxReturn ? 
+                        `$${minReturn}` : 
+                        `$${minReturn} - $${maxReturn}`}
+                </div>`;
+            });
+
+            results.innerHTML = resultHTML;
+        }
     </script>
 </body>
 </html>
