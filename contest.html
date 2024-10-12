@@ -6,8 +6,35 @@
     <title>Generatore di Biglietti per Contest</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- Include il tuo file CSS -->
     <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 36px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
         #ticket {
             width: 400px;
             height: 220px;
@@ -21,48 +48,82 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             overflow: hidden;
         }
-        #ticket::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #3498db, #2ecc71, #f1c40f, #e74c3c);
-        }
+
         #logo {
             position: absolute;
             top: 10px;
             right: 10px;
             width: 80px;
             height: auto;
+            z-index: 2; /* Assicurati che il logo sia sopra il rettangolo */
         }
+
+        .ticket-background {
+            background-color: white;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            z-index: 1; /* Deve essere dietro il testo */
+        }
+
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #resultLink, #uploadResult {
+            margin-top: 20px;
+            word-break: break-all;
+            font-size: 18px;
+        }
+
         .ticket-info {
             margin: 10px 0;
             font-size: 20px;
             font-family: 'Playfair Display', serif;
+            position: relative;
+            z-index: 2; /* Assicurati che sia sopra il rettangolo */
         }
+
         .ticket-label {
             font-weight: bold;
             color: #2c3e50;
         }
+
         .ticket-value {
             color: #34495e;
         }
+
         .ticket-number {
-            position: absolute;
-            bottom: 10px;
-            right: 20px;
             font-size: 24px;
             font-weight: bold;
             color: #3498db;
-        }
-        .ticket-background {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
             background-color: white;
-            padding: 10px; /* Margine interno per il rettangolo */
-            border-radius: 5px; /* Angoli arrotondati */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra leggera */
-            margin-bottom: 10px; /* Spazio sotto il rettangolo */
+            padding: 5px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -77,74 +138,102 @@
             <div class="ticket-background">
                 <p class="ticket-info"><span class="ticket-label">Nome:</span> <span id="nomeTicket" class="ticket-value"></span></p>
                 <p class="ticket-info"><span class="ticket-label">Cognome:</span> <span id="cognomeTicket" class="ticket-value"></span></p>
+                <p class="ticket-number">#<span id="numeroTicket"></span></p>
             </div>
-            <div class="ticket-number">#<span id="numeroTicket"></span></div>
         </div>
         <div id="resultLink"></div>
         <div id="uploadResult"></div>
     </div>
 
     <script>
-       let contatore = localStorage.getItem('contatoreBiglietti') ? parseInt(localStorage.getItem('contatoreBiglietti')) : 1;
+        let contatore = localStorage.getItem('contatoreBiglietti') ? parseInt(localStorage.getItem('contatoreBiglietti')) : 1;
 
-function generaBiglietto() {
-    const nome = document.getElementById('nome').value;
-    const cognome = document.getElementById('cognome').value;
+        function generaBiglietto() {
+            const nome = document.getElementById('nome').value;
+            const cognome = document.getElementById('cognome').value;
 
-    if (!nome || !cognome) {
-        alert('Per favore, inserisci sia il nome che il cognome.');
-        return;
-    }
+            if (!nome || !cognome) {
+                alert('Per favore, inserisci sia il nome che il cognome.');
+                return;
+            }
 
-    document.getElementById('nomeTicket').textContent = nome;
-    document.getElementById('cognomeTicket').textContent = cognome;
-    document.getElementById('numeroTicket').textContent = String(contatore).padStart(3, '0');
+            document.getElementById('nomeTicket').textContent = nome;
+            document.getElementById('cognomeTicket').textContent = cognome;
+            document.getElementById('numeroTicket').textContent = String(contatore).padStart(3, '0');
 
-    // Incrementa il contatore e salva nel localStorage
-    contatore++;
-    localStorage.setItem('contatoreBiglietti', contatore);
+            // Incrementa il contatore e salva nel localStorage
+            contatore++;
+            localStorage.setItem('contatoreBiglietti', contatore);
 
-    html2canvas(document.getElementById('ticket'), {
-        useCORS: true,
-        scale: 2
-    }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'biglietto.png';
-        link.href = canvas.toDataURL();
-        link.innerHTML = 'Clicca qui per scaricare il biglietto';
-        document.getElementById('resultLink').innerHTML = '';
-        document.getElementById('resultLink').appendChild(link);
+            html2canvas(document.getElementById('ticket'), {
+                useCORS: true,
+                scale: 2
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'biglietto.png';
+                link.href = canvas.toDataURL();
+                link.innerHTML = 'Clicca qui per scaricare il biglietto';
+                document.getElementById('resultLink').innerHTML = '';
+                document.getElementById('resultLink').appendChild(link);
 
-        canvas.toBlob(blob => {
-            const formData = new FormData();
-            formData.append('image', blob, 'ticket.png');
+                canvas.toBlob(blob => {
+                    const formData = new FormData();
+                    formData.append('image', blob, 'ticket.png');
 
-            fetch('https://api.imgbb.com/1/upload?key=2970b606faf3351a85bd7467ab5efd5b', {
+                    fetch('https://api.imgbb.com/1/upload?key=2970b606faf3351a85bd7467ab5efd5b', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const imgUrl = data.data.url;
+                            document.getElementById('uploadResult').innerHTML = `
+                                <p>Biglietto caricato con successo su ImgBB!</p>
+                                <p>Link diretto: <a href="${imgUrl}" target="_blank">${imgUrl}</a></p>
+                                <p>Link per eliminazione: <a href="${data.data.delete_url}" target="_blank">${data.data.delete_url}</a></p>
+                            `;
+
+                            // Invia il link su Discord tramite il webhook
+                            inviaSuDiscord(nome, cognome, imgUrl);
+                        } else {
+                            throw new Error('Caricamento fallito: ' + JSON.stringify(data));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Errore nel caricamento dell\'immagine:', error);
+                        document.getElementById('uploadResult').innerHTML = '<p>Si è verificato un errore nel caricamento dell\'immagine su ImgBB. Puoi comunque scaricare il biglietto usando il link sopra.</p>';
+                    });
+                });
+            }).catch(error => {
+                console.error('Errore nella generazione dell\'immagine:', error);
+                document.getElementById('resultLink').innerHTML = '<p>Si è verificato un errore nella generazione dell\'immagine. Per favore, riprova.</p>';
+            });
+        }
+
+        // Funzione per inviare il link su Discord tramite webhook
+        function inviaSuDiscord(nome, cognome, imgUrl) {
+            const webhookUrl = 'https://discord.com/api/webhooks/1294770349711429764/eZUKKpYTTHz70g6VABl2jpMB6-tlC2f5pfMbDBKye4CXHPQ9bPohjQOQfM9eH1J6Qbh2';
+            const messaggio = {
+                content: `Nuovo biglietto generato!\nNome: ${nome}\nCognome: ${cognome}\nLink Biglietto: ${imgUrl}`
+            };
+
+            fetch(webhookUrl, {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(messaggio)
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('uploadResult').innerHTML = `
-                        <p>Biglietto caricato con successo su ImgBB!</p>
-                        <p>Link diretto: <a href="${data.data.url}" target="_blank">${data.data.url}</a></p>
-                        <p>Link per eliminazione: <a href="${data.data.delete_url}" target="_blank">${data.data.delete_url}</a></p>
-                    `;
-                } else {
-                    throw new Error('Caricamento fallito: ' + JSON.stringify(data));
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Errore nella richiesta al webhook: ' + response.statusText);
                 }
             })
             .catch(error => {
-                console.error('Errore nel caricamento dell\'immagine:', error);
-                document.getElementById('uploadResult').innerHTML = '<p>Si è verificato un errore nel caricamento dell\'immagine su ImgBB. Puoi comunque scaricare il biglietto usando il link sopra.</p>';
+                console.error('Errore nell\'invio al webhook:', error);
             });
-        });
-    }).catch(error => {
-        console.error('Errore nella generazione dell\'immagine:', error);
-        document.getElementById('resultLink').innerHTML = '<p>Si è verificato un errore nella generazione dell\'immagine. Per favore, riprova.</p>';
-    });
-}
+        }
     </script>
 </body>
 </html>
