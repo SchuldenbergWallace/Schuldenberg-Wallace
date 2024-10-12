@@ -85,63 +85,66 @@
     </div>
 
     <script>
-        let contatore = 1;
+       let contatore = localStorage.getItem('contatoreBiglietti') ? parseInt(localStorage.getItem('contatoreBiglietti')) : 1;
 
-        function generaBiglietto() {
-            const nome = document.getElementById('nome').value;
-            const cognome = document.getElementById('cognome').value;
+function generaBiglietto() {
+    const nome = document.getElementById('nome').value;
+    const cognome = document.getElementById('cognome').value;
 
-            if (!nome || !cognome) {
-                alert('Per favore, inserisci sia il nome che il cognome.');
-                return;
-            }
+    if (!nome || !cognome) {
+        alert('Per favore, inserisci sia il nome che il cognome.');
+        return;
+    }
 
-            document.getElementById('nomeTicket').textContent = nome;
-            document.getElementById('cognomeTicket').textContent = cognome;
-            document.getElementById('numeroTicket').textContent = String(contatore).padStart(3, '0');
-            contatore++;
+    document.getElementById('nomeTicket').textContent = nome;
+    document.getElementById('cognomeTicket').textContent = cognome;
+    document.getElementById('numeroTicket').textContent = String(contatore).padStart(3, '0');
 
-            html2canvas(document.getElementById('ticket'), {
-                useCORS: true,
-                scale: 2
-            }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'biglietto.png';
-                link.href = canvas.toDataURL();
-                link.innerHTML = 'Clicca qui per scaricare il biglietto';
-                document.getElementById('resultLink').innerHTML = '';
-                document.getElementById('resultLink').appendChild(link);
+    // Incrementa il contatore e salva nel localStorage
+    contatore++;
+    localStorage.setItem('contatoreBiglietti', contatore);
 
-                canvas.toBlob(blob => {
-                    const formData = new FormData();
-                    formData.append('image', blob, 'ticket.png');
+    html2canvas(document.getElementById('ticket'), {
+        useCORS: true,
+        scale: 2
+    }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'biglietto.png';
+        link.href = canvas.toDataURL();
+        link.innerHTML = 'Clicca qui per scaricare il biglietto';
+        document.getElementById('resultLink').innerHTML = '';
+        document.getElementById('resultLink').appendChild(link);
 
-                    fetch('https://api.imgbb.com/1/upload?key=2970b606faf3351a85bd7467ab5efd5b', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            document.getElementById('uploadResult').innerHTML = `
-                                <p>Biglietto caricato con successo su ImgBB!</p>
-                                <p>Link diretto: <a href="${data.data.url}" target="_blank">${data.data.url}</a></p>
-                                <p>Link per eliminazione: <a href="${data.data.delete_url}" target="_blank">${data.data.delete_url}</a></p>
-                            `;
-                        } else {
-                            throw new Error('Caricamento fallito: ' + JSON.stringify(data));
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Errore nel caricamento dell\'immagine:', error);
-                        document.getElementById('uploadResult').innerHTML = '<p>Si è verificato un errore nel caricamento dell\'immagine su ImgBB. Puoi comunque scaricare il biglietto usando il link sopra.</p>';
-                    });
-                });
-            }).catch(error => {
-                console.error('Errore nella generazione dell\'immagine:', error);
-                document.getElementById('resultLink').innerHTML = '<p>Si è verificato un errore nella generazione dell\'immagine. Per favore, riprova.</p>';
+        canvas.toBlob(blob => {
+            const formData = new FormData();
+            formData.append('image', blob, 'ticket.png');
+
+            fetch('https://api.imgbb.com/1/upload?key=2970b606faf3351a85bd7467ab5efd5b', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('uploadResult').innerHTML = `
+                        <p>Biglietto caricato con successo su ImgBB!</p>
+                        <p>Link diretto: <a href="${data.data.url}" target="_blank">${data.data.url}</a></p>
+                        <p>Link per eliminazione: <a href="${data.data.delete_url}" target="_blank">${data.data.delete_url}</a></p>
+                    `;
+                } else {
+                    throw new Error('Caricamento fallito: ' + JSON.stringify(data));
+                }
+            })
+            .catch(error => {
+                console.error('Errore nel caricamento dell\'immagine:', error);
+                document.getElementById('uploadResult').innerHTML = '<p>Si è verificato un errore nel caricamento dell\'immagine su ImgBB. Puoi comunque scaricare il biglietto usando il link sopra.</p>';
             });
-        }
+        });
+    }).catch(error => {
+        console.error('Errore nella generazione dell\'immagine:', error);
+        document.getElementById('resultLink').innerHTML = '<p>Si è verificato un errore nella generazione dell\'immagine. Per favore, riprova.</p>';
+    });
+}
     </script>
 </body>
 </html>
