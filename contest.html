@@ -41,43 +41,40 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            z-index: 1;
         }
 
-        .ticket-info {
-            font-size: 20px;
-            font-family: 'Roboto Mono', monospace;
-            color: #4b3c29;
-            position: absolute;
-        }
-
-        /* Posizione numero del ticket */
+        /* Posizione del numero del biglietto */
         .ticket-number {
-            font-size: 30px;
+            font-size: 20px;
             font-weight: bold;
             color: #4b3c29;
             position: absolute;
-            top: 164px;
-            left: 696px;
+            top: 150px; /* Spostato più in basso */
+            left: 700px; /* Spostato a destra */
+            z-index: 10;
         }
 
-        /* Posizione cognome */
-        .ticket-surname {
-            font-size: 30px;
+        /* Posizione del cognome a destra di "COGNOME:" */
+        #cognomeTicket {
+            font-size: 20px;
             color: #4b3c29;
             position: absolute;
-            top: 202px;
-            left: 658px;
-font-weight: bold;
+            top: 190px; /* Posizionato sotto l'etichetta "COGNOME:" */
+            left: 660px; /* Spostato a destra rispetto a "COGNOME:" */
+            font-weight: bold;
+            z-index: 10;
         }
 
-        /* Posizione nome */
-        .ticket-name {
-            font-size: 30px;
+        /* Posizione del nome a destra di "NOME:" */
+        #nomeTicket {
+            font-size: 20px;
             color: #4b3c29;
             position: absolute;
-            top: 242px;
-            left: 598px;
-font-weight: bold;
+            top: 230px; /* Posizionato sotto l'etichetta "NOME:" */
+            left: 600px; /* Spostato a destra rispetto a "NOME:" */
+            font-weight: bold;
+            z-index: 10;
         }
 
         input, button {
@@ -119,11 +116,10 @@ font-weight: bold;
         <input type="text" id="cognome" placeholder="Cognome">
         <button onclick="generaBiglietto()">Genera Biglietto</button>
         <div id="ticket">
-            <img id="logo" src="https://i.ibb.co/qFT0pFN/WeS.png" alt="Logo Azienda" crossorigin="anonymous">
             <div class="ticket-background">
-                <p class="ticket-info"><span class="ticket-label">Nome:</span> <span id="nomeTicket" class="ticket-value"></span></p>
-                <p class="ticket-info"><span class="ticket-label">Cognome:</span> <span id="cognomeTicket" class="ticket-value"></span></p>
                 <p class="ticket-number">#<span id="numeroTicket"></span></p>
+                <p id="cognomeTicket"></p>
+                <p id="nomeTicket"></p>
             </div>
         </div>
         <div id="resultLink"></div>
@@ -216,7 +212,7 @@ font-weight: bold;
                 }
             })
             .catch(error => {
-                console.error('Errore nell\'invio al webhook:', error);
+                console.error('Errore nell\'invio del messaggio su Discord:', error);
             });
         }
     </script>
