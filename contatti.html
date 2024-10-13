@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contatti - Wallace & Schuldenberg Capital Partners</title>
+    <style>
+        :root {
+            --primary-color: #005f7f;
+            --secondary-color: #7fba00;
+            --text-color: #333333;
+            --background-color: #f8f9fa;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #0099cc);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            max-width: 180px;
+            height: auto;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        main {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .contact-title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2rem; /* Dimensione del titolo */
+        }
+        .founders {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px; /* Aggiunto un gap tra i fondatori */
+        }
+        .founder {
+            width: 300px;
+            text-align: center;
+        }
+        .founder-img {
+            width: 100%; /* Modificato per adattarsi al contenitore */
+            height: 250px; /* Altezza fissa */
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: var(--primary-color);
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        .phone {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://i.ibb.co/qFT0pFN/WeS.png" alt="Logo Wallace & Schuldenberg" class="logo">
+        <nav>
+            <ul>
+                <li><a href="homepage.html">Home</a></li>
+                <li><a href="homepage.html#servizi">Servizi</a></li>
+                <li><a href="contatti.html">Contatti</a></li>
+                <li><a href="admin.html">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="contact-title">
+            <span role="img" aria-label="Telefono">📞</span> CONTATTI <span role="img" aria-label="Telefono">📞</span>
+        </div>
+        <div class="founders">
+            <div class="founder">
+                <img src="https://i.ibb.co/BgdNG4m/ww.png" alt="Edward Wallace" class="founder-img">
+                <h2>Edward Wallace</h2>
+                <p>Edward ha una vasta esperienza nel settore finanziario, avendo lavorato per anni nel Connecticut presso importanti istituzioni finanziarie. La sua esperienza e visione strategica sono fondamentali per il successo dei nostri clienti.</p>
+                <p class="phone">Tel: (480) 180-6091</p>
+            </div>
+            <div class="founder">
+                <img src="https://i.ibb.co/94t4MBn/immagine-removebg-preview.png" alt="Chuck Schuldenberg" class="founder-img">
+                <h2>Chuck Schuldenberg</h2>
+                <p>Chuck ha costruito la sua carriera nel Connecticut, specializzandosi in consulenza finanziaria e gestione patrimoniale. La sua profonda conoscenza del mercato e l'approccio innovativo sono risorse preziose per la nostra azienda.</p>
+                <p class="phone">Tel: (205) 929-1328</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
