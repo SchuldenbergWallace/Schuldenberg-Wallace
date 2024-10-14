@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aiuta i Giovani Vulnerabili</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        let obiettivo = 20000; // Obiettivo di raccolta
+
+        function salvaDati(totale, donazioni) {
+            localStorage.setItem("totaleRaccolto", totale);
+            localStorage.setItem("donazioni", JSON.stringify(donazioni));
+        }
+
+        function caricaDati() {
+            let totale = localStorage.getItem("totaleRaccolto");
+            let donazioni = localStorage.getItem("donazioni");
+            return {
+                totaleRaccolto: totale ? parseFloat(totale) : 2025,
+                donazioni: donazioni ? JSON.parse(donazioni) : [
+                    { nome: "Chuck Schuldenberg", importo: 1000, tempo: "1 ora fa" },
+                    { nome: "Edward Wallace", importo: 1000, tempo: "3 ore fa" },
+                    { nome: "Anonimo", importo: 25, tempo: "5 ore fa" }
+                ]
+            };
+        }
+
+        function aggiornaTotale(totaleRaccolto) {
+            document.getElementById("totale").innerText = `$${totaleRaccolto}`;
+            let percentuale = (totaleRaccolto / obiettivo) * 100;
+            document.getElementById("barraProgresso").style.width = `${percentuale}%`;
+        }
+
+        function aggiornaDonazioni(donazioni) {
+            const listaDonazioni = document.getElementById("lista-donazioni");
+            listaDonazioni.innerHTML = ""; // Pulisce la lista prima di ricaricare le donazioni
+            donazioni.forEach(donazione => {
+                const nuovoElemento = document.createElement("li");
+                nuovoElemento.classList.add("flex", "items-center");
+                nuovoElemento.innerHTML = `
+                    <div class="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mr-4">
+                        <span class="text-gray-600 font-bold text-2xl">${donazione.nome.charAt(0).toUpperCase()}</span>
+                    </div>
+                    <div>
+                        <p class="font-semibold">${donazione.nome}</p>
+                        <p><span class="text-lg font-bold">$${donazione.importo.toFixed(2)}</span> • ${donazione.tempo}</p>
+                    </div>
+                `;
+                listaDonazioni.prepend(nuovoElemento);
+            });
+        }
+
+        function aggiungiDonazione(event) {
+            event.preventDefault(); // Previene il refresh della pagina
+
+            const nome = document.getElementById("nome").value;
+            const importo = parseFloat(document.getElementById("importo").value);
+            const tempo = "Adesso";
+
+            let { totaleRaccolto, donazioni } = caricaDati();
+
+            // Aggiungi la nuova donazione alla lista e aggiorna il totale
+            donazioni.push({ nome, importo, tempo });
+            totaleRaccolto += importo;
+
+            // Aggiorna la UI
+            aggiornaTotale(totaleRaccolto);
+            aggiornaDonazioni(donazioni);
+
+            // Salva i dati nel localStorage
+            salvaDati(totaleRaccolto, donazioni);
+
+            // Resetta il form
+            document.getElementById("donazione-form").reset();
+        }
+
+        window.onload = function() {
+            const { totaleRaccolto, donazioni } = caricaDati();
+            aggiornaTotale(totaleRaccolto);
+            aggiornaDonazioni(donazioni);
+        };
+    </script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <header class="flex justify-between items-center mb-8 animate-fadeIn">
+            <div>
+                <h1 id="aiuta-i-giovani-vulnerabili" class="text-4xl font-bold text-gray-800 mb-2">Aiuta i Giovani Vulnerabili 🏠</h1>
+                <p>Organizzato da Wallace and Schuldenberg</p>
+            </div>
+            <img src="https://i.ibb.co/KmVKYzj/WeS.png" alt="Logo Wallace and Schuldenberg" class="h-16 w-auto">
+        </header>
+
+        <main class="flex flex-wrap -mx-4">
+            <div class="w-full lg:w-2/3 px-4 mb-8 lg:mb-0">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://static.wikia.nocookie.net/deadliestfiction/images/3/3d/CGF_members.jpg/revision/latest?cb=20140830185924" alt="Immagine della causa" class="w-full h-80 object-cover">
+                    <div class="p-8">
+                        <div class="mb-8 animate-fadeIn">
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <span id="totale" class="text-4xl font-bold text-gray-800">$2,025</span>
+                                    <span class="text-xl text-gray-600 ml-2">raccolti di $20,000</span>
+                                </div>
+                                <div class="w-1/2">
+                                    <div class="bg-gray-200 rounded-full h-4">
+                                        <div id="barraProgresso" class="bg-green-500 rounded-full h-4 w-[10.125%] animate-pulse-slow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <section class="mb-8">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">Donazioni recenti 🎁</h2>
+                            <ul id="lista-donazioni" class="space-y-4"></ul>
+                        </section>
+
+                        <section class="mt-8">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4">Aggiungi una nuova donazione</h2>
+                            <form id="donazione-form" onsubmit="aggiungiDonazione(event)">
+                                <div class="mb-4">
+                                    <label for="nome" class="block text-gray-700 font-bold mb-2">Nome</label>
+                                    <input type="text" id="nome" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="importo" class="block text-gray-700 font-bold mb-2">Importo</label>
+                                    <input type="number" id="importo" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required min="1">
+                                </div>
+                                <button type="submit" class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600 transition duration-300">Aggiungi Donazione</button>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-1/3 px-4">
+                <div class="bg-white rounded-lg shadow-md p-6 animate-fadeIn sticky top-4">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Informazioni rapide 📊</h2>
+                    <ul class="space-y-2">
+                        <li><span class="text-green-500 mr-3 text-2xl">✅</span> <span class="text-lg">Obiettivo: $20,000</span></li>
+                        <li><span class="text-blue-500 mr-3 text-2xl">🕒</span> <span class="text-lg">Durata: 30 giorni</span></li>
+                        <li><span class="text-purple-500 mr-3 text-2xl">👥</span> <span class="text-lg">Beneficiari: 50+ giovani</span></li>
+                        <li><span class="text-yellow-500 mr-3 text-2xl">🌟</span> <span class="text-lg">Impatto: Cambiare vite</span></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
