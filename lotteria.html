@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotteria Wallace and Schuldenberg 🎰</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 90%;
+            width: 2000px;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            margin-bottom: 1em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .bowl-container {
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
+            position: relative;
+        }
+        .bowl {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, #ffd700 0%, #ffaa00 100%);
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .bowl::before {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 40%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            top: 10%;
+            left: 10%;
+        }
+        .ball {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            position: absolute;
+            transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            color: #000;
+        }
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+        }
+        button:hover {
+            background: linear-gradient(45deg, #ff8e8e, #ffe07d);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px 0 rgba(229, 66, 10, 0.8);
+        }
+        #result {
+            font-size: 20px;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+		
+        @keyframes pulse {
+            0% {
+                transform: scale(1.5);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+            70% {
+                transform: scale(2);
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+            100% {
+                transform: scale(1.5);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Lotteria Wallace and Schuldenberg - Mitsupisci EVOX 🎉</h1>
+        <div class="bowl-container">
+            <div class="bowl" id="bowl"></div>
+        </div>
+        <button onclick="spinAndExtract()">Gira ed Estrai 🔮</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const participants = {
+            9: "BRAIAN ZOOLOMON",
+            10: "BRAIAN ZOOLOMON",
+            11: "MARK SMITH",
+            12: "MARK SMITH",
+            13: "GIANNI LODDO",
+            14: "GIANNI LODDO",
+            15: "GIANNI LODDO",
+            16: "GIANNI LODDO",
+            17: "GIANNI LODDO",
+            18: "GIANNI LODDO",
+            19: "PIETRO MULA",
+            20: "PIETRO MULA",
+            21: "PIETRO MULA",
+            22: "JEROM PINGUINO",
+            24: "SCARLETT DENSON",
+        };
+
+        // Aggiungi i numeri rimanenti
+        for (let i = 25; i <= 54; i++) participants[i] = "MARCUS MILLER";
+        participants[55] = "BRANDON GRANT";
+        for (let i = 114; i <= 123; i++) participants[i] = "ADAM CARTER";
+        for (let i = 128; i <= 131; i++) participants[i] = "Harvey Jackson";
+
+        const numbers = Object.keys(participants).map(Number);
+        const colors = ['#ff6b6b', '#4ecdc4', '#45aaf2', '#fed330', '#fd9644', '#a55eea', '#ff6b6b', '#4ecdc4', '#45aaf2', '#fed330'];
+
+        function createBalls() {
+            const bowl = document.getElementById('bowl');
+            numbers.forEach((num, index) => {
+                const ball = document.createElement('div');
+                ball.className = 'ball';
+                ball.style.background = colors[index % colors.length];
+                ball.textContent = num;
+                positionBall(ball);
+                bowl.appendChild(ball);
+            });
+        }
+
+        function positionBall(ball) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = Math.random() * 100 + 50;
+            const x = Math.cos(angle) * radius + 135;
+            const y = Math.sin(angle) * radius + 135;
+            ball.style.left = `${x}px`;
+            ball.style.top = `${y}px`;
+        }
+
+        function spinAndExtract() {
+            const balls = document.querySelectorAll('.ball');
+            balls.forEach(ball => {
+                positionBall(ball);
+                ball.style.transform = 'scale(1)';
+                ball.style.boxShadow = 'none';
+                ball.style.animation = 'none';
+            });
+
+            setTimeout(() => {
+                const result = document.getElementById('result');
+                const extractedNumber = 9;  // Sempre 9 come richiesto
+                const extractedName = participants[extractedNumber];
+                result.innerHTML = `<h2>Numero fortunato: ${extractedNumber} 🎉</h2>
+                                    <p>Vincitore: ${extractedName}</p>`;
+                result.style.opacity = 1;
+                
+                // Anima la palla vincente
+                const winningBall = Array.from(balls).find(ball => ball.textContent == '9');
+                winningBall.style.transform = 'scale(1.5)';
+                winningBall.style.boxShadow = '0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #ff00de, 0 0 60px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de';
+                winningBall.style.animation = 'pulse 1.5s infinite';
+                winningBall.style.zIndex = '1000';
+            }, 1000);
+        }
+
+        createBalls();
+    </script>
+</body>
+</html>
