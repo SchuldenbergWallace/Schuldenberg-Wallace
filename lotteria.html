@@ -113,6 +113,20 @@
                 box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
             }
         }
+
+        @keyframes fireworks {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: #fff;
+            animation: fireworks 1.5s ease-out infinite;
+        }
     </style>
 </head>
 <body>
@@ -147,6 +161,7 @@
         // Aggiungi i numeri rimanenti
         for (let i = 25; i <= 54; i++) participants[i] = "MARCUS MILLER";
         participants[55] = "BRANDON GRANT";
+        participants[56] = "BYEONG BATRIEU";
         for (let i = 114; i <= 123; i++) participants[i] = "ADAM CARTER";
         for (let i = 128; i <= 131; i++) participants[i] = "Harvey Jackson";
 
@@ -176,29 +191,56 @@
 
         function spinAndExtract() {
             const balls = document.querySelectorAll('.ball');
-            balls.forEach(ball => {
-                positionBall(ball);
-                ball.style.transform = 'scale(1)';
-                ball.style.boxShadow = 'none';
-                ball.style.animation = 'none';
-            });
+            let interval = setInterval(() => {
+                balls.forEach(ball => {
+                    positionBall(ball);  // Fa muovere le palline all'interno della ciotola
+                });
+            }, 100);  // Movimento continuo
 
             setTimeout(() => {
+                clearInterval(interval);  // Ferma il movimento dopo 8 secondi
+
                 const result = document.getElementById('result');
-                const extractedNumber = 9;  // Sempre 9 come richiesto
+                const extractedNumber = 56;  // Numero vincente
                 const extractedName = participants[extractedNumber];
                 result.innerHTML = `<h2>Numero fortunato: ${extractedNumber} 🎉</h2>
-                                    <p>Vincitore: ${extractedName}</p>`;
+                                    <p><strong>Vincitore: ${extractedName}</strong></p>`;
                 result.style.opacity = 1;
-                
+
                 // Anima la palla vincente
-                const winningBall = Array.from(balls).find(ball => ball.textContent == '9');
+                const winningBall = Array.from(balls).find(ball => ball.textContent == '56');
                 winningBall.style.transform = 'scale(1.5)';
                 winningBall.style.boxShadow = '0 0 20px #fff, 0 0 30px #fff, 0 0 40px #fff, 0 0 50px #ff00de, 0 0 60px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de';
                 winningBall.style.animation = 'pulse 1.5s infinite';
                 winningBall.style.zIndex = '1000';
-            }, 1000);
+
+                launchFireworks();  // Lancia i fuochi d'artificio
+            }, 8000);
         }
+
+       function launchFireworks() {
+    const container = document.querySelector('.container');
+    const interval = setInterval(() => {
+        for (let i = 0; i < 10; i++) {  // Genera 10 fuochi ogni ciclo
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = `${Math.random() * 100}%`;
+            firework.style.top = `${Math.random() * 100}%`;
+            firework.style.animationDuration = `${Math.random() * 1 + 0.5}s`;  // Durata variabile tra 0.5 e 1.5 secondi
+            container.appendChild(firework);
+
+            setTimeout(() => {
+                firework.remove();  // Rimuove ogni fuoco d'artificio dopo l'animazione
+            }, 1500);  // Ogni fuoco d'artificio dura 1.5 secondi
+        }
+    }, 500);  // Ogni ciclo genera nuovi fuochi ogni 0.5 secondi
+
+    // Ferma i fuochi d'artificio dopo 15 secondi
+    setTimeout(() => {
+        clearInterval(interval);
+    }, 15000);  // 15 secondi in totale
+}
+
 
         createBalls();
     </script>
