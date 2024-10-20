@@ -171,6 +171,7 @@
         <button type="button" onclick="uploadToImgbb()">Carica su imgbb</button>
         <button type="button" onclick="transformToPDA()">PDA</button>
 		 <button type="button" onclick="transformToPAT()">PAT</button>
+	    <button type="button" onclick="transformToCDI()">CDI</button>
     </form>
 
     <div id="um-idcard">
@@ -293,6 +294,12 @@
             document.getElementById('um-idcard').style.backgroundColor = '#fbbbbb';
             document.getElementById('lang_header').textContent = 'FIVE LIVES';
             document.getElementById('cardtype').textContent = 'PATENTE DI GUIDA';
+        }
+	    function transformToCDI() {
+            document.getElementById('um-idcard').style.backgroundColor = '#ebf3fb';
+            document.getElementById('lang_header').textContent = 'FIVE LIVES';
+			document.getElementById('cardtype').textContent = 'CARTA D\'IDENTITÀ';
+			
         }
     </script>
 
