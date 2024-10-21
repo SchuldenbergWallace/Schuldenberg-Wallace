@@ -13,15 +13,22 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700&display=swap');
         
         body {
-            font-family: Inter, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            box-sizing: border-box;
-            text-align: center;
-            color: #fff;
-            background-color: #0f0f10;
-            margin: 0;
-            padding: 0;
+             font-family: Inter, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(135deg, #1e1e2f, #3d3d5c);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+    margin: 0;
+    padding: 0;
         }
+		@keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
         #um-idcard {
             width: 43vh;
@@ -155,6 +162,32 @@
         #cropperImage {
             max-width: 100%;
         }
+		button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+input[type="text"] {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
     </style>
 </head>
 <body>
@@ -228,6 +261,36 @@
     </div>
 
     <script>
+	   function updateCardLive() {
+        // Aggiorna i valori della carta d'identità in base ai campi
+        document.getElementById('Cognome_display').textContent = document.getElementById('cognome').value;
+        document.getElementById('Nome_display').textContent = document.getElementById('nome').value;
+        document.getElementById('Dob_display').textContent = document.getElementById('dob').value;
+        document.getElementById('Sesso_display').textContent = document.getElementById('sesso').value;
+        document.getElementById('Nazionalità_display').textContent = document.getElementById('nazionalita').value;
+        document.getElementById('Firma_display').textContent = document.getElementById('firma').value;
+    }
+
+    function updateSignature() {
+        const cognome = document.getElementById('cognome').value;
+        const nome = document.getElementById('nome').value;
+        const firma = cognome + ' ' + nome;
+        document.getElementById('firma').value = firma;
+        updateCardLive();  // Aggiorna la carta anche con la firma aggiornata
+    }
+
+    // Aggiungi gli event listener a tutti i campi per aggiornare la carta in tempo reale
+    document.getElementById('cognome').addEventListener('input', updateSignature);
+    document.getElementById('nome').addEventListener('input', updateSignature);
+    document.getElementById('dob').addEventListener('input', updateCardLive);
+    document.getElementById('sesso').addEventListener('input', updateCardLive);
+    document.getElementById('nazionalita').addEventListener('input', updateCardLive);
+
+    // Chiama la funzione all'avvio per aggiornare la carta con i valori predefiniti
+    window.onload = function() {
+        updateSignature(); // Per aggiornare la firma iniziale
+        updateCardLive();  // Per aggiornare tutti gli altri valori iniziali
+    };
         let cropper;
 
         document.getElementById('mugshot').addEventListener('change', function(e) {
@@ -348,7 +411,7 @@ function uploadToImgbb() {
 
 
         function sendToDiscord(imageUrl) {
-            const webhookUrl = "https://discord.com/api/webhooks/1297544147603034224/AjBZRK42B65e3xERnhKwf3KJtN8Lk9dyLqby61LnNUQ7UIZV9nchnFBfZD9IOuqPzkHC";
+            const webhookUrl = "https://discord.com/api/webhooks/1295289860437049384/N_emJZpUIIpxdIAEDWT9kancgcCgCTNsb8afMg8EupWCPR2gm5sfnmFVaK41BbNLbJyD";
             const message = {
                 content: `Immagine caricata su imgbb: ${imageUrl}`,
             };
@@ -391,4 +454,3 @@ function uploadToImgbb() {
 
 </body>
 </html>
-
