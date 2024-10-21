@@ -227,6 +227,7 @@ input[type="text"]:focus {
         <button type="button" onclick="transformToPDA()">PDA</button>
         <button type="button" onclick="transformToPAT()">PAT</button>
         <button type="button" onclick="transformToCDI()">CDI</button>
+	    <button type="button" onclick="transformToAVV()">AVV</button>
     </form>
 
     <div id="um-idcard">
@@ -448,6 +449,11 @@ function uploadToImgbb() {
             document.getElementById('um-idcard').style.backgroundColor = '#ebf3fb';
             document.getElementById('lang_header').textContent = 'FIVE LIVES';
             document.getElementById('cardtype').textContent = 'CARTA D\'IDENTITÀ';
+        }
+	        function transformToAVV() {
+            document.getElementById('um-idcard').style.backgroundColor = '#f9c491';
+            document.getElementById('lang_header').textContent = 'FIVE LIVES';
+            document.getElementById('cardtype').textContent = 'AVVOCATO';
         }
     </script>
 
