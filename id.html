@@ -316,44 +316,39 @@ input[type="text"]:focus {
             }
         });
 
-      document.getElementById('cropButton').addEventListener('click', function() {
+function removeBackground(blob, fileName) {
+    // Create a FormData object to hold the image data
+    const formData = new FormData();
+    formData.append('image', blob, fileName);
+    
+    // Call the API to remove the background
+    fetch('YOUR_API_ENDPOINT_HERE', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response, e.g., updating the mugshot display
+        if (data.success) {
+            document.getElementById('mugshot_display').src = data.newImageUrl; // Update with new image URL
+            document.getElementById('smallmugshot_display').src = data.newImageUrl; // Update smaller image too
+        } else {
+            console.error('Error removing background:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error during background removal:', error);
+    });
+}
+
+document.getElementById('cropButton').addEventListener('click', function() {
     const canvas = cropper.getCroppedCanvas();
     canvas.toBlob(blob => {
-        // Rimuovi lo sfondo dall'immagine principale
-        removeBackground(blob, 'mugshot_display', 'smallmugshot_display');
+        const fileName = document.getElementById('mugshot').files[0].name; // Get original file name
+        removeBackground(blob, fileName);
     });
 });
 
-function removeBackground(imageBlob, mainImgId, smallImgId) {
-    const formData = new FormData();
-    formData.append("image_file", imageBlob);
-    formData.append("size", "auto");
-
-    fetch("https://api.remove.bg/v1.0/removebg", {
-        method: "POST",
-        body: formData,
-        headers: {
-            "X-Api-Key": "s8R6a7ZZ8pxBwPtW9D69nvZM" // Sostituisci con la tua chiave API di Remove.bg
-        },
-    })
-    .then(response => response.blob())
-    .then(blob => {
-        const mainImg = document.getElementById(mainImgId);
-        const smallImg = document.getElementById(smallImgId);
-
-        mainImg.src = URL.createObjectURL(blob);
-        smallImg.src = URL.createObjectURL(blob); // Usa lo stesso blob per il small mugshot
-        mainImg.onload = () => {
-            mainImg.style.display = 'block';
-        };
-        smallImg.onload = () => {
-            smallImg.style.display = 'block';
-        };
-    })
-    .catch(error => {
-        console.error('Error removing background:', error);
-    });
-}
 
         function updateCard() {
             document.getElementById('Cognome_display').textContent = document.getElementById('cognome').value;
