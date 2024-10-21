@@ -317,14 +317,8 @@ input[type="text"]:focus {
         });
 
       document.getElementById('cropButton').addEventListener('click', function() {
-       const canvas = cropper.getCroppedCanvas();
-            canvas.toBlob(blob => {
-                const img = document.getElementById('mugshot_display');
-                img.src = URL.createObjectURL(blob);
-                document.getElementById('smallmugshot_display').src = URL.createObjectURL(blob);
-                img.onload = () => {
-                    img.style.display = 'block';
-                    smallImg.style.display = 'block';
+const canvas = cropper.getCroppedCanvas(); 
+	      canvas.toBlob(blob => { // Rimuovi lo sfondo dall'immagine principale removeBackground(blob, 'mugshot_displ
     });
 });
 
