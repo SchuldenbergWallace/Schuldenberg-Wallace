@@ -222,6 +222,7 @@ input[type="text"]:focus {
 
         <button type="button" id="cropButton" style="display: none;">Ritaglia Immagine</button>
 
+        <button type="button" onclick="updateCard()">Aggiorna Carta d'Identità</button>
         <button type="button" onclick="downloadCard()">Scarica Carta d'Identità</button>
         <button type="button" onclick="uploadToImgbb()">Carica su imgbb</button>
         <button type="button" onclick="transformToPDA()">PDA</button>
@@ -254,7 +255,7 @@ input[type="text"]:focus {
             </div>
             <div class="flagsandimg">
                 <img id="smallmugshot_display" src="" alt="Piccola Foto">
-		<img id="flag" src="32.png" alt="Bandiera">
+                <img id="flag" src="32.png" alt="Bandiera">
             </div>
         </div>
     </div>
@@ -315,45 +316,44 @@ input[type="text"]:focus {
             }
         });
 
-        document.getElementById('cropButton').addEventListener('click', function() {
-            const canvas = cropper.getCroppedCanvas();
-            canvas.toBlob(blob => {
-                const img = document.getElementById('mugshot_display');
-                img.src = URL.createObjectURL(blob);
-                document.getElementById('smallmugshot_display').src = URL.createObjectURL(blob);
-                img.onload = () => {
-                    img.style.display = 'block';
-                    smallImg.style.display = 'block';
-                };
-                
-                removeBackground(blob); // Rimuovi lo sfondo
-            });
-        });
+      document.getElementById('cropButton').addEventListener('click', function() {
+    const canvas = cropper.getCroppedCanvas();
+    canvas.toBlob(blob => {
+        // Rimuovi lo sfondo dall'immagine principale
+        removeBackground(blob, 'mugshot_display', 'smallmugshot_display');
+    });
+});
 
-        function removeBackground(imageBlob) {
-            const formData = new FormData();
-            formData.append("image_file", imageBlob);
-            formData.append("size", "auto");
+function removeBackground(imageBlob, mainImgId, smallImgId) {
+    const formData = new FormData();
+    formData.append("image_file", imageBlob);
+    formData.append("size", "auto");
 
-            fetch("https://api.remove.bg/v1.0/removebg", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "X-Api-Key": "s8R6a7ZZ8pxBwPtW9D69nvZM" // Sostituisci con la tua chiave API di Remove.bg
-                },
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                const img = document.getElementById('mugshot_display');
-                img.src = URL.createObjectURL(blob);
-                img.onload = () => {
-                    img.style.display = 'block';
-                };
-            })
-            .catch(error => {
-                console.error('Error removing background:', error);
-            });
-        }
+    fetch("https://api.remove.bg/v1.0/removebg", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-Api-Key": "s8R6a7ZZ8pxBwPtW9D69nvZM" // Sostituisci con la tua chiave API di Remove.bg
+        },
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const mainImg = document.getElementById(mainImgId);
+        const smallImg = document.getElementById(smallImgId);
+
+        mainImg.src = URL.createObjectURL(blob);
+        smallImg.src = URL.createObjectURL(blob); // Usa lo stesso blob per il small mugshot
+        mainImg.onload = () => {
+            mainImg.style.display = 'block';
+        };
+        smallImg.onload = () => {
+            smallImg.style.display = 'block';
+        };
+    })
+    .catch(error => {
+        console.error('Error removing background:', error);
+    });
+}
 
         function updateCard() {
             document.getElementById('Cognome_display').textContent = document.getElementById('cognome').value;
