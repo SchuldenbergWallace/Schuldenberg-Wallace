@@ -320,7 +320,7 @@ function uploadToImgbb() {
             const formData = new FormData();
             formData.append('image', blob, 'carta_identita.png');
 
-            fetch('https://api.imgbb.com/1/upload?expiration=600&key=2970b606faf3351a85bd7467ab5efd5b', {
+            fetch('https://api.imgbb.com/1/upload?key=2970b606faf3351a85bd7467ab5efd5b', {
                 method: 'POST',
                 body: formData
             })
