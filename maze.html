@@ -92,6 +92,13 @@
             text-align: center;
             color: #fff;
         }
+
+        .summary {
+            margin-top: 20px;
+            font-size: 1.1em;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -127,6 +134,10 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="summary" id="summary"></div>
+    </div>
+
     <footer>
         <p>Maze Bank © 2024. Tutti i diritti riservati.</p>
     </footer>
@@ -153,11 +164,21 @@
             // Calcola l'aumento giornaliero del 2% in base alle settimane (7 giorni per settimana)
             let totalDaily = loanAmount;
             const days = weeks * 7;
-            for (let i = 0; i < days; i++) {
-                totalDaily += totalDaily * 0.02;
+            let remainingCapital = loanAmount;
+            let weeklyPayment = totalWeekly / weeks;
+            let summaryHTML = '';
+
+            for (let i = 1; i <= weeks; i++) {
+                let beforePayment = remainingCapital;
+                for (let day = 0; day < 7; day++) {
+                    remainingCapital += remainingCapital * 0.02;
+                }
+                remainingCapital -= weeklyPayment;
+                summaryHTML += `<p>Settimana ${i}: Prima del pagamento: €${beforePayment.toFixed(2)}, Dopo pagamento: €${remainingCapital.toFixed(2)}</p>`;
             }
 
-            document.getElementById('daily-results').innerHTML = `<p class="result">Totale dopo ${days} giorni con il 2% giornaliero: €${totalDaily.toFixed(2)}</p>`;
+            document.getElementById('daily-results').innerHTML = `<p class="result">Totale dopo ${days} giorni con il 2% giornaliero e pagamento rate settimanali: €${remainingCapital.toFixed(2)}</p>`;
+            document.getElementById('summary').innerHTML = summaryHTML;
         }
 
         // Calcola i risultati all'avvio per impostare i valori predefiniti
