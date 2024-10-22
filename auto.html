@@ -24,20 +24,21 @@
         }
 
         .contract-page {
-            background: #fff;
-            padding: 40px;
-            margin: 20px auto;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            position: relative;
-            width: 21cm;
-            min-height: 29.7cm;
-            box-sizing: border-box;
-            background-image: 
-                linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px),
-                linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            border: 1px solid #ddd;
-        }
+    background: #fff;
+    padding: 40px;
+    margin: 20px auto;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    position: relative;
+    width: 21cm; /* Larghezza A4 */
+    height: 29.7cm; /* Altezza A4 */
+    box-sizing: border-box; /* Include padding e bordi nelle dimensioni */
+    background-image: 
+        linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    border: 1px solid #ddd;
+}
+
 
         .contract-page::before {
             content: '';
