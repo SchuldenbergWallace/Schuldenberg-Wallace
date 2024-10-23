@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+	  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: white;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 150px;
+            height: auto;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: #00A9E0;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 900px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .investment-option {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .investment-icon {
+            width: 50px;
+            height: 50px;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #00A9E0;
+            border-radius: 50%;
+            color: white;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            margin: 2rem 0;
+            background: linear-gradient(135deg, rgba(166,206,57,0.1), rgba(0,169,224,0.1));
+            border-radius: 15px;
+            padding: 1rem;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .nav-buttons {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            background: #00A9E0;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #A6CE39;
+            transform: scale(1.05);
+        }
+
+        .highlight {
+            color: #A6CE39;
+            font-weight: 600;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        /* Custom styling for investment plans */
+        .plan-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .plan-card {
+            width: 45%;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .plan-card:hover {
+            transform: scale(1.02);
+        }
+
+        .plan-header {
+            color: #00A9E0;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .plan-detail {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .placeholder-chart {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(166,206,57,0.2), rgba(0,169,224,0.2));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            margin: 1rem 0;
+        }
+        /* ... [Previous CSS remains the same] ... */
+        .hero-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.6;
+            text-align: center;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .chart {
+            width: 100%;
+            height: 200px;
+            background: white;
+            border-radius: 10px;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80%;
+            background: linear-gradient(90deg, 
+                rgba(166,206,57,0.2) 0%,
+                rgba(0,169,224,0.2) 100%);
+        }
+
+        .chart::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg,
+                transparent 0%,
+                rgba(166,206,57,0.1) 50%,
+                rgba(0,169,224,0.1) 100%);
+        }
+
+        .value-proposition {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .value-item i {
+            font-size: 2rem;
+            color: #00A9E0;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Welcome -->
+        <div class="slide active" id="slide1">
+            <img src="https://i.ibb.co/KmVKYzj/WeS.png" alt="Logo" class="logo">
+            <h1 class="title fade-up">Wallace & Schuldenberg</h1>
+            <div class="card fade-up">
+                <h2 class="subtitle">Wallace & Schuldenberg</h2>
+                <img src="[URL dell'immagine fornita]" alt="Capital Partners" class="hero-image">
+                <div class="intro-text">
+                    Wallace & Schuldenberg Capital Partners è leader nel settore degli investimenti ad alto rendimento. 
+                    La nostra missione è fornire opportunità di investimento esclusive ai nostri clienti attraverso 
+                    strategie innovative e personalizzate. Combiniamo esperienza nel mercato finanziario con tecnologie 
+                    all'avanguardia per massimizzare i rendimenti mantenendo un controllo accurato dei rischi.
+                </div>
+                <div class="value-proposition">
+                    <div class="value-item">
+                        <i>🎯</i>
+                        <h3>Precisione</h3>
+                        <p>Strategie mirate</p>
+                    </div>
+                    <div class="value-item">
+                        <i>🛡️</i>
+                        <h3>Sicurezza</h3>
+                        <p>Gestione del rischio</p>
+                    </div>
+                    <div class="value-item">
+                        <i>📈</i>
+                        <h3>Performance</h3>
+                        <p>Rendimenti ottimizzati</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Low Risk -->
+        <div class="slide" id="slide2">
+            <img src="https://i.ibb.co/KmVKYzj/WeS.png" alt="Logo" class="logo">
+            <h2 class="title">Investimenti a Basso Rischio</h2>
+            <div class="plan-container">
+                <div class="plan-card">
+                    <div class="plan-header">Piano 14 Giorni</div>
+                    <div class="plan-detail">
+                        <span class="highlight">25%</span> rendimento garantito
+                    </div>
+                    <div class="chart">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200">
+                            <path d="M0 200 L75 150 L150 120 L225 90 L300 50" 
+                                  stroke="#A6CE39" 
+                                  fill="none" 
+                                  stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="example-box">
+                        Esempio: $10,000 → $12,500
+                        <br>
+                        Profitto netto: $2,500
+                    </div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-header">Piano 21 Giorni</div>
+                    <div class="plan-detail">
+                        <span class="highlight">37%</span> rendimento garantito
+                    </div>
+                    <div class="chart">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200">
+                            <path d="M0 200 L75 140 L150 100 L225 70 L300 30" 
+                                  stroke="#00A9E0" 
+                                  fill="none" 
+                                  stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="example-box">
+                        Esempio: $10,000 → $13,700
+                        <br>
+                        Profitto netto: $3,700
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: High Risk -->
+        <div class="slide" id="slide3">
+            <img src="https://i.ibb.co/KmVKYzj/WeS.png" alt="Logo" class="logo">
+            <h2 class="title">Investimenti ad Alto Rischio</h2>
+            <div class="plan-container">
+                <div class="plan-card">
+                    <div class="plan-header">Piano 14 Giorni</div>
+                    <div class="plan-detail">
+                        <span class="highlight">23-30%</span> rendimento variabile
+                    </div>
+                    <div class="chart">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200">
+                            <path d="M0 200 L75 130 L150 90 L225 70 L300 40" 
+                                  stroke="#A6CE39" 
+                                  fill="none" 
+                                  stroke-width="3"/>
+                            <path d="M0 200 L75 120 L150 80 L225 50 L300 20" 
+                                  stroke="#00A9E0" 
+                                  stroke-dasharray="5,5"
+                                  fill="none" 
+                                  stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="example-box">
+                        Esempio: $40,000 → $49,200-$52,000
+                        <br>
+                        Profitto potenziale: $9,200-$12,000
+                    </div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-header">Piano 21 Giorni</div>
+                    <div class="plan-detail">
+                        <span class="highlight">34-45%</span> rendimento variabile
+                    </div>
+                    <div class="chart">
+                        <svg width="100%" height="100%" viewBox="0 0 300 200">
+                            <path d="M0 200 L75 120 L150 80 L225 40 L300 20" 
+                                  stroke="#A6CE39" 
+                                  fill="none" 
+                                  stroke-width="3"/>
+                            <path d="M0 200 L75 110 L150 70 L225 30 L300 10" 
+                                  stroke="#00A9E0" 
+                                  stroke-dasharray="5,5"
+                                  fill="none" 
+                                  stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="example-box">
+                        Esempio: $40,000 → $53,600-$58,000
+                        <br>
+                        Profitto potenziale: $13,600-$18,000
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="previousSlide()">Precedente</button>
+            <button class="nav-button" onclick="nextSlide()">Successivo</button>
+        </div>
+    </div>
+
+    <script>
+       let currentSlide = 1;
+        const totalSlides = 3;
+
+        function showSlide(slideNumber) {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            document.getElementById(`slide${slideNumber}`).classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = currentSlide < totalSlides ? currentSlide + 1 : 1;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide = currentSlide > 1 ? currentSlide - 1 : totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+    </script>
+</body>
+</html>
