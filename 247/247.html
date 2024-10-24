@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contratto di Vendita - Mirror 24/7</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            font-size: 14px;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 3px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #contratto {
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20mm;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: auto;
+            margin-right: 15px;
+        }
+
+        .title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .section {
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 14px;
+            margin: 10px 0 5px 0;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-group">
+            <label>Nome Venditore:</label>
+            <input type="text" id="nomeVenditore" onchange="updateContract()">
+        </div>
+        <div class="form-group">
+            <label>Nome Acquirente:</label>
+            <input type="text" id="nomeAcquirente" onchange="updateContract()">
+        </div>
+        <div class="form-group">
+            <label>Importo:</label>
+            <input type="text" id="importo" onchange="updateContract()">
+        </div>
+        <div class="form-group">
+            <label>Modalità Pagamento:</label>
+            <input type="text" id="modalitaPagamento" onchange="updateContract()">
+        </div>
+        <div class="form-group">
+            <label>Data Scadenza:</label>
+            <input type="date" id="dataScadenza" onchange="updateContract()">
+        </div>
+        <div class="form-group">
+            <label>Firma Venditore:</label>
+            <input type="text" id="firmaVenditore" onchange="updateContract()">
+        </div>
+        <div class="form-group">
+            <label>Firma Acquirente:</label>
+            <input type="text" id="firmaAcquirente" onchange="updateContract()">
+        </div>
+        <div class="form-group">
+            <label>Data Firma Venditore:</label>
+            <input type="date" id="dataFirmaVenditore" onchange="updateContract()">
+        </div>
+        <div class="form-group">
+            <label>Data Firma Acquirente:</label>
+            <input type="date" id="dataFirmaAcquirente" onchange="updateContract()">
+        </div>
+        <button onclick="generateAndUpload()">Genera e Carica Contratto</button>
+    </div>
+
+    <div id="contratto">
+        <div class="header">
+            <img src="247.webp" alt="Los Santos Seal" class="logo">
+            <div class="title">CONTRATTO DI VENDITA</div>
+        </div>
+
+        <div class="gallery">
+            <img src="1.png" alt="Mirror 24/7 Esterno">
+            <img src="2.png" alt="Mirror 24/7 Interno">
+            <img src="3.png" alt="Mirror 24/7 Dettaglio">
+            <img src="4.png" alt="Mirror 24/7 Vista">
+        </div>
+
+        <div class="section">
+            <p><strong>Tra:</strong></p>
+            <p><strong>Venditore:</strong> <span id="venditoreTxt"></span>, di seguito denominato "Venditore".</p>
+            <p><strong>Acquirente:</strong> <span id="acquirenteTxt"></span>, di seguito denominato "Acquirente".</p>
+        </div>
+
+        <div class="section">
+            <p><strong>Oggetto del contratto:</strong> Il presente contratto disciplina la vendita del negozio 24/7 denominato "Mirror 24/7", situato a Los Santos, San Andreas, di proprietà del Venditore.</p>
+        </div>
+
+        <div class="section">
+            <h2>1. Descrizione dell'immobile e beni inclusi</h2>
+            <p>Il "Mirror 24/7" è un negozio di alimentari e beni di prima necessità completo di tutti i beni, attrezzature, e accessori attualmente presenti nell'immobile. La vendita include:</p>
+            <ul>
+                <li>L'immobile adibito a negozio</li>
+                <li>Scaffalature e attrezzature interne (registratori di cassa, frigoriferi, ecc.)</li>
+                <li>Scorte di magazzino presenti alla data di chiusura della vendita</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>2. Prezzo di vendita</h2>
+            <p>Il prezzo pattuito per la vendita del Mirror 24/7 è di <span id="importoTxt"></span>, che l'Acquirente si impegna a corrispondere al Venditore nelle seguenti modalità:</p>
+            <p><span id="modalitaTxt"></span></p>
+        </div>
+
+        <div class="section">
+            <h2>3. Condizioni di pagamento</h2>
+            <p>Il pagamento dovrà essere effettuato entro e non oltre il <span id="scadenzaTxt"></span>, secondo le modalità concordate tra le parti.</p>
+        </div>
+
+        <div class="section">
+            <h2>4. Data di trasferimento</h2>
+            <p>La consegna del Mirror 24/7, comprensiva di chiavi, documenti di proprietà e trasferimento delle licenze commerciali, avverrà entro il giorno successivo all'acquisto.</p>
+        </div>
+
+        <div class="section">
+            <h2>5. Dichiarazioni e garanzie del venditore</h2>
+            <p>Il Venditore garantisce che:</p>
+            <ul>
+                <li>Il Mirror 24/7 è libero da ipoteche o vincoli legali.</li>
+                <li>Il negozio e le attrezzature sono in buone condizioni e funzionanti.</li>
+                <li>Il Venditore è il legittimo proprietario dell'immobile e dei beni venduti.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>7. Risoluzione del contratto</h2>
+            <p>In caso di mancato pagamento entro i termini stabiliti, il Venditore avrà il diritto di risolvere il presente contratto e trattenere eventuali acconti già versati a titolo di penale.</p>
+        </div>
+
+        <div class="section">
+            <h2>8. Firma delle parti</h2>
+            <p>Il presente contratto viene sottoscritto in duplice copia, una per ciascuna delle parti.</p>
+            
+            <div style="margin-top: 20px;">
+                <p><strong>Firma del Venditore:</strong> <span id="firmaVenditoreTxt" class="signature"></span></p>
+                <p>Data: <span id="dataFirmaVenditoreTxt"></span></p>
+            </div>
+            <div style="margin-top: 10px;">
+                <p><strong>Firma dell'Acquirente:</strong> <span id="firmaAcquirenteTxt" class="signature"></span></p>
+                <p>Data: <span id="dataFirmaAcquirenteTxt"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateContract() {
+            document.getElementById('venditoreTxt').textContent = document.getElementById('nomeVenditore').value;
+            document.getElementById('acquirenteTxt').textContent = document.getElementById('nomeAcquirente').value;
+            document.getElementById('importoTxt').textContent = document.getElementById('importo').value;
+            document.getElementById('modalitaTxt').textContent = document.getElementById('modalitaPagamento').value;
+            document.getElementById('scadenzaTxt').textContent = document.getElementById('dataScadenza').value;
+            document.getElementById('firmaVenditoreTxt').textContent = document.getElementById('firmaVenditore').value;
+            document.getElementById('firmaAcquirenteTxt').textContent = document.getElementById('firmaAcquirente').value;
+            document.getElementById('dataFirmaVenditoreTxt').textContent = document.getElementById('dataFirmaVenditore').value;
+            document.getElementById('dataFirmaAcquirenteTxt').textContent = document.getElementById('dataFirmaAcquirente').value;
+        }
+
+        async function generateAndUpload() {
+            const element = document.getElementById('contratto');
+            try {
+                const canvas = await html2canvas(element);
+                const image = canvas.toDataURL('image/png');
+                
+                const formData = new FormData();
+                formData.append('image', image.split(',')[1]);
+
+                const response = await fetch('https://api.imgbb.com/1/upload?key=2970b606faf3351a85bd7467ab5efd5b', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                alert('Contratto caricato con successo! URL: ' + data.data.url);
+            } catch (error) {
+                console.error('Errore:', error);
+                alert('Si è verificato un errore durante il caricamento del contratto.');
+            }
+        }
+    </script>
+</body>
+</html>
