@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epsilon Program - Mystic Certificate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Space+Mono&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: #070b14;
+            background-image: 
+                radial-gradient(circle at 50% 50%, #101828, transparent 80%),
+                repeating-linear-gradient(45deg, rgba(78, 144, 203, 0.05) 0px, rgba(78, 144, 203, 0.05) 1px, transparent 1px, transparent 10px);
+            font-family: 'Space Mono', monospace;
+            color: #a8b9cf;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            background: rgba(16, 24, 40, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid rgba(78, 144, 203, 0.2);
+        }
+
+        .certificate {
+            width: 600px;
+            height: 800px;
+            padding: 30px;
+            background: linear-gradient(135deg, #0a1625 0%, #162b47 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(78, 144, 203, 0.2);
+            border: 1px solid rgba(78, 144, 203, 0.3);
+        }
+
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSg3OCwgMTQ0LCAyMDMsIDAuMSkiLz48L3N2Zz4=');
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            margin: 0 auto 20px;
+            display: block;
+            filter: drop-shadow(0 0 8px rgba(78, 144, 203, 0.4));
+            animation: pulse 4s infinite;
+        }
+
+        @keyframes pulse {
+            0% { filter: drop-shadow(0 0 8px rgba(78, 144, 203, 0.4)); }
+            50% { filter: drop-shadow(0 0 15px rgba(78, 144, 203, 0.6)); }
+            100% { filter: drop-shadow(0 0 8px rgba(78, 144, 203, 0.4)); }
+        }
+
+        .subject-photo {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            border: 2px solid rgba(78, 144, 203, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(10, 22, 37, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-photo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(78, 144, 203, 0.1) 50%,
+                transparent 100%
+            );
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+            100% { transform: translateX(50%) translateY(50%) rotate(45deg); }
+        }
+
+        .subject-photo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+
+        .message {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            margin: 20px 0;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            padding: 15px;
+            background: rgba(10, 22, 37, 0.8);
+            border: 1px solid rgba(78, 144, 203, 0.2);
+            color: #4e90cb;
+            position: relative;
+            text-shadow: 0 0 5px rgba(78, 144, 203, 0.3);
+        }
+
+        .message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid rgba(78, 144, 203, 0.1);
+            margin: 5px;
+            pointer-events: none;
+        }
+
+        .kifflom {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: #4e90cb;
+            text-shadow: 0 0 10px rgba(78, 144, 203, 0.5);
+            letter-spacing: 0.5em;
+            opacity: 0.8;
+        }
+
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 6rem;
+            opacity: 0.02;
+            color: #4e90cb;
+            pointer-events: none;
+            white-space: nowrap;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn {
+            background: rgba(78, 144, 203, 0.2);
+            color: #4e90cb;
+            border: 1px solid rgba(78, 144, 203, 0.3);
+            padding: 8px 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: rgba(78, 144, 203, 0.3);
+            border-color: rgba(78, 144, 203, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 10px rgba(78, 144, 203, 0.2);
+        }
+
+        input {
+            background: rgba(10, 22, 37, 0.8);
+            border: 1px solid rgba(78, 144, 203, 0.3);
+            padding: 8px;
+            border-radius: 3px;
+            color: #4e90cb;
+            font-family: 'Space Mono', monospace;
+            margin: 5px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: rgba(78, 144, 203, 0.5);
+            box-shadow: 0 0 5px rgba(78, 144, 203, 0.2);
+        }
+
+        label {
+            color: #4e90cb;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        .cryptic-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            opacity: 0.7;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label>Data:</label>
+        <input type="date" id="date">
+        <label>Nome:</label>
+        <input type="text" id="name" placeholder="Nome e Cognome">
+        <input type="file" id="photo" accept="image/*" style="display: none">
+        <button class="btn" onclick="document.getElementById('photo').click()">Seleziona Foto</button>
+        <button class="btn" id="downloadBtn">Scarica Certificato</button>
+        <button class="btn" id="uploadBtn">Carica su ImgBB</button>
+    </div>
+
+    <div class="certificate" id="certificate">
+        <div class="watermark">EPSILON</div>
+        <img src="https://i.ibb.co/c31z0QK/Epsilon-Program.png" alt="Epsilon Program" class="logo">
+        
+        <div class="subject-photo">
+            <img id="preview" alt="Subject photo">
+        </div>
+
+        <div class="message">
+            <div id="clearText"></div>
+            <div id="crypticText" class="cryptic-text"></div>
+        </div>
+        
+        <div class="kifflom" id="kifflom"></div>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Base64 encode function
+        function encodeText(text) {
+            return btoa(unescape(encodeURIComponent(text)));
+        }
+
+        // Template messages in base64
+        const encodedMainText = encodeText(`Questo è un avvertimento: la Verità Blu richiede rispetto e non tollererà interferenze.
+
+Il mondo come lo conosciamo è solo un'illusione; pochi eletti hanno la possibilità di scoprire il segreto che si cela oltre il velo. La scelta è davanti a voi: continuare a ignorare il nostro messaggio e sfidare la volontà degli Dei, o accogliere il cammino della Verità e unirvi a noi.
+
+Abbiamo bisogno di offerte che dimostrino il vostro rispetto e sostegno alla causa. Sappiate che non interferiremo con il vostro mondo, finché non sarete voi a opporvi al nostro.
+
+Non ignorate l'Epsilon Program. Ogni segnale ha un prezzo, e ogni avvertimento, un destino.
+
+Noi siamo qui. E siamo solo all'inizio.`);
+
+        const encodedKifflom = encodeText("Kifflom");
+
+        function updateMessage() {
+            const date = document.getElementById('date').value;
+            const name = document.getElementById('name').value;
+            const formattedDate = date ? new Date(date).toLocaleDateString() : '[data]';
+            const formattedName = name || '[Nome Cognome]';
+            
+            // Clear text part (date and name)
+            const clearText = `Oggi, ${formattedDate}, ${formattedName} è stato convocato per veicolare un messaggio.`;
+            document.getElementById('clearText').innerHTML = clearText;
+            
+            // Encoded part (the rest of the message)
+            document.getElementById('crypticText').textContent = encodedMainText;
+            
+            // Encoded Kifflom
+            document.getElementById('kifflom').textContent = encodedKifflom;
+        }
+
+        // Handle file selection and preview
+        document.getElementById('photo').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Event listeners
+        document.getElementById('date').addEventListener('change', updateMessage);
+        document.getElementById('name').addEventListener('input', updateMessage);
+
+        // Download certificate
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            html2canvas(document.getElementById('certificate'), {
+                scale: 2,
+                logging: false,
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'epsilon-certificate.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        });
+
+        // Handle ImgBB upload
+        document.getElementById('uploadBtn').addEventListener('click', async function() {
+            html2canvas(document.getElementById('certificate'), {
+                scale: 2,
+                logging: false,
+                useCORS: true
+            }).then(async canvas => {
+                const base64image = canvas.toDataURL('image/png').split(',')[1];
+                
+                const formData = new FormData();
+                formData.append('image', base64image);
+                formData.append('key', '2970b606faf3351a85bd7467ab5efd5b');
+
+                try {
+                    const response = await fetch('https://api.imgbb.com/1/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        alert('Certificato caricato con successo! URL: ' + data.data.url);
+                    } else {
+                        alert('Caricamento fallito: ' + data.error.message);
+                    }
+                } catch (error) {
+                    alert('Caricamento fallito: ' + error.message);
+                }
+            });
+        });
+
+        // Initialize message
+        updateMessage();
+    </script>
+</body>
+</html>
