@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.cdnjs.com/css?family=Playfair+Display:400,700|Cinzel:400,700|Montserrat:400,700" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .input-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #d4af37;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #d4af37;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+        }
+        input:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+        button {
+            background: linear-gradient(135deg, #d4af37 0%, #f2d06b 100%);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        #ticket {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            padding: 40px;
+            border: 2px solid #d4af37;
+            width: 600px;
+            height: 350px;
+            position: relative;
+            display: none;
+            margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .logo {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+        }
+        .logo::before, .logo::after {
+            content: '♦';
+            color: #d4af37;
+            margin: 0 15px;
+            font-size: 24px;
+        }
+        .ticket-content {
+            margin-top: 30px;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+        .ticket-content p {
+            margin: 10px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 10px;
+        }
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-family: 'Cinzel', serif;
+            font-size: 72px;
+            opacity: 0.05;
+            color: #d4af37;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .corner-decoration {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #d4af37;
+            opacity: 0.3;
+        }
+        .top-left {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+        }
+        .top-right {
+            top: 20px;
+            right: 20px;
+            border-left: none;
+            border-bottom: none;
+        }
+        .bottom-left {
+            bottom: 20px;
+            left: 20px;
+            border-right: none;
+            border-top: none;
+        }
+        .bottom-right {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+        }
+        .percentage {
+            font-size: 24px;
+            color: #d4af37;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+        #ticketData {
+            color: #d4af37;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-form">
+            <h2><i class="fas fa-gem"></i> Casinò Diamond</h2>
+            <div class="input-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" required placeholder="Inserisci il nome">
+            </div>
+            <div class="input-group">
+                <label for="cognome">Cognome</label>
+                <input type="text" id="cognome" required placeholder="Inserisci il cognome">
+            </div>
+            <button onclick="generateTicket()">Genera Certificato di Quota</button>
+        </div>
+
+        <div id="ticket">
+            <div class="corner-decoration top-left"></div>
+            <div class="corner-decoration top-right"></div>
+            <div class="corner-decoration bottom-left"></div>
+            <div class="corner-decoration bottom-right"></div>
+            
+            <div class="logo">Casinò Diamond</div>
+            <div class="watermark">DIAMOND</div>
+            <div class="ticket-content">
+                <p style="text-align: center; font-family: 'Cinzel', serif; font-size: 24px; color: #d4af37;">
+                    CERTIFICATO DI QUOTA
+                </p>
+                <p>Nome: <span id="ticketNome" style="color: #d4af37;"></span></p>
+                <p>Cognome: <span id="ticketCognome" style="color: #d4af37;"></span></p>
+                <p>Percentuale Quota: <span class="percentage">10%</span></p>
+                <p>Data di Emissione: <span id="ticketData"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateTicket() {
+            const nome = document.getElementById('nome').value;
+            const cognome = document.getElementById('cognome').value;
+
+            if (!nome || !cognome) {
+                alert('Per favore compila tutti i campi');
+                return;
+            }
+
+            document.getElementById('ticketNome').textContent = nome;
+            document.getElementById('ticketCognome').textContent = cognome;
+            
+            const oggi = new Date();
+            const opzioni = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            document.getElementById('ticketData').textContent = oggi.toLocaleDateString('it-IT', opzioni);
+            document.getElementById('ticket').style.display = 'block';
+
+            // Rimuovi il vecchio pulsante di download se esiste
+            const oldBtn = document.querySelector('.download-btn');
+            if (oldBtn) oldBtn.remove();
+
+            // Aggiungi pulsante per il download
+            const downloadBtn = document.createElement('button');
+            downloadBtn.textContent = 'Scarica Certificato';
+            downloadBtn.onclick = downloadTicket;
+            downloadBtn.style.marginTop = '20px';
+            downloadBtn.className = 'download-btn';
+            document.querySelector('.container').appendChild(downloadBtn);
+        }
+
+        function downloadTicket() {
+            const ticket = document.getElementById('ticket');
+            
+            html2canvas(ticket).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'certificato-quota-casino-diamond.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
