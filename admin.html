@@ -61,15 +61,14 @@
             <button onclick="redirect('contest')">Contest</button>
             <button onclick="redirect('dono')">Donazioni</button>
              <button onclick="redirect('id')">ID</button>
-             <button onclick="redirect('maze')">Maze</button>
-                         <button onclick="redirect('ppt')">Presentazione</button>
+         
         </div>
     </div>
 
     <script>
         function checkPassword() {
             var password = document.getElementById('passwordInput').value;
-            if (password === atob("d3MxMjM0")) { // Password codificata in base64
+            if (password === atob("d3MxMjM0")) { 
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
             } else {
