@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>80s Party Ticket Generator</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #2b0245, #1e0133);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Press Start 2P', cursive;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        .ticket {
+            background: linear-gradient(90deg, #000000, #1a0033);
+            border: 3px solid #ff00ff;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px auto;
+            width: 800px;
+            height: 300px;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5),
+                        0 0 40px rgba(0, 255, 255, 0.3),
+                        inset 0 0 60px rgba(255, 0, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ticket::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, 
+                    transparent 0%, 
+                    rgba(255, 0, 255, 0.1) 50%, 
+                    transparent 100%),
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(255, 0, 255, 0.05) 0px,
+                    rgba(255, 0, 255, 0.05) 10px,
+                    transparent 10px,
+                    transparent 20px
+                );
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .left-section {
+            flex: 0 0 35%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-right: 2px dashed #ff00ff;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        .logo-container {
+            width: 200px;
+            height: 200px;
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .right-section {
+            flex: 0 0 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .ticket-header {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #ff00ff;
+            text-shadow: 3px 3px #00ffff,
+                         -1px -1px 0 #fff,
+                         5px 5px 0 rgba(0, 0, 0, 0.5);
+            font-family: 'Permanent Marker', cursive;
+            transform: rotate(-2deg);
+        }
+
+        .ticket-info {
+            margin: 8px 0;
+            font-size: 14px;
+            color: #00ffff;
+            text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+
+        .date-time {
+            font-size: 18px;
+            color: #ff77ff;
+            margin: 15px 0;
+            text-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .price {
+            font-size: 24px;
+            color: #ff00ff;
+            margin: 20px 0;
+            text-shadow: 2px 2px #00ffff;
+            font-family: 'Permanent Marker', cursive;
+        }
+
+        .download-btn {
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            border: none;
+            padding: 15px 30px;
+            color: #000;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.8);
+        }
+
+        .hologram {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: hologram 3s infinite linear;
+        }
+
+        @keyframes hologram {
+            0% { transform: rotate(0deg); opacity: 0.3; }
+            50% { opacity: 0.8; }
+            100% { transform: rotate(360deg); opacity: 0.3; }
+        }
+
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 24px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="ticket" id="ticket">
+            <div class="left-section">
+                <div class="logo-container">
+                    <img src="wes.png" alt="Logo" id="logo">
+                </div>
+                <div class="hologram"></div>
+            </div>
+            <div class="right-section">
+                <div class="ticket-header">80s RETRO PARTY</div>
+                <div class="ticket-info">WALLACE AND SCHULDENBERG</div>
+                <div class="ticket-info">CIVICO 377</div>
+                <div class="date-time">28/11/24 - 22:30</div>
+                <div class="price">$ 100</div>
+            </div>
+        </div>
+        <button class="download-btn" onclick="uploadToImgBB()">Upload Ticket</button>
+    </div>
+    <div class="loading" id="loading">Uploading ticket...</div>
+
+    <script>
+        async function uploadToImgBB() {
+            const loading = document.getElementById('loading');
+            loading.style.display = 'flex';
+
+            try {
+                // Cattura il ticket come immagine
+                const ticket = document.getElementById('ticket');
+                const canvas = await html2canvas(ticket, {
+                    scale: 2, // Migliore qualità
+                    useCORS: true,
+                    logging: false
+                });
+
+                // Converti il canvas in base64
+                const base64image = canvas.toDataURL("image/png").split(',')[1];
+
+                // Prepara i dati per l'upload
+                const formData = new FormData();
+                formData.append("image", base64image);
+
+                // Carica su ImgBB
+                const response = await fetch("https://api.imgbb.com/1/upload?key=2970b606faf3351a85bd7467ab5efd5b", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Apri l'immagine in una nuova tab
+                    window.open(data.data.url, '_blank');
+                } else {
+                    throw new Error('Upload failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Si è verificato un errore durante il caricamento del ticket. Riprova.');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
