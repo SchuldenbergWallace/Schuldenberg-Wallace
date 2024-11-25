@@ -2,159 +2,210 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Mind Care Event</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evento Salute Mentale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Chakra+Petch:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            background: linear-gradient(135deg, #f6f0ff, #e0d6ff);
+            font-family: 'Chakra Petch', sans-serif;
+            background: linear-gradient(135deg, #e6f3ff, #b0d4ff);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
+            padding: 20px;
+            perspective: 1000px;
+        }
+
+        .ticket-container {
+            position: relative;
+            width: 950px;
+            height: 450px;
+            perspective: 1500px;
         }
 
         .ticket {
-            width: 800px;
-            height: 350px;
-            background: linear-gradient(135deg, #ffffff, #f0e6ff);
-            border-radius: 20px;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffffff, #e6f2ff);
+            border-radius: 25px;
             box-shadow: 
-                0 15px 30px rgba(128, 64, 255, 0.2),
-                0 10px 20px rgba(128, 64, 255, 0.1);
+                0 30px 60px rgba(0,119,182,0.2),
+                0 15px 30px rgba(0,119,182,0.1);
             display: flex;
             overflow: hidden;
-            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .ticket:hover {
+            transform: rotateY(-5deg) rotateX(2deg) scale(1.02);
         }
 
         .ticket-left {
-            width: 300px;
-            background: linear-gradient(45deg, #8A4FFF, #5E34BF);
+            width: 35%;
+            background: linear-gradient(45deg, #00b4d8, #0077b6);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
+            padding: 30px;
             position: relative;
-            padding: 20px;
-            text-align: center;
+            overflow: hidden;
         }
 
-        .logo {
-            width: 200px;
-            height: 200px;
-            border-radius: 15px;
+        .logo-container {
+            width: 220px;
+            height: 220px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
             object-fit: contain;
         }
 
+        .medical-icons {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+ 
+
         .ticket-right {
-            flex-grow: 1;
-            padding: 30px;
+            width: 65%;
+            padding: 40px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            background: linear-gradient(to right, #f0f9ff, #d6ecff);
+            position: relative;
+            overflow: hidden;
         }
 
         .event-title {
-            font-size: 28px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.7rem;
             font-weight: 700;
-            color: #5E34BF;
-            margin-bottom: 15px;
-            text-transform: uppercase;
+            color: #0077b6;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,119,182,0.1);
         }
 
         .event-details {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .mental-health-text {
-            font-size: 14px;
-            color: #666;
-            font-style: italic;
-            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #00509d;
+            margin-bottom: 12px;
         }
 
         .price {
-            font-size: 36px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
             font-weight: 700;
-            color: #8A4FFF;
-            margin: 10px 0;
+            color: #00b4d8;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,180,216,0.2);
         }
 
-        .imgbb-btn {
-            background: linear-gradient(45deg, #8A4FFF, #5E34BF);
+        .donation-note {
+            font-size: 1rem;
+            color: #00296b;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .upload-btn {
+            width: 300px;
+            margin-top: 25px;
+            padding: 15px;
+            background: linear-gradient(135deg, #0077b6, #00b4d8);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-weight: 600;
+            border-radius: 50px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.3s;
-            margin-top: 20px;
+            transition: all 0.4s ease;
+            box-shadow: 0 15px 25px rgba(0,119,182,0.2);
+            position: relative;
+            overflow: hidden;
         }
 
-        .imgbb-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .serial-number {
+        .upload-btn::before {
+            content: '';
             position: absolute;
-            bottom: 15px;
-            right: 20px;
-            font-size: 12px;
-            color: #666;
-        }
-
-        .wave {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+            top: 0;
+            left: -100%;
             width: 100%;
-            height: 60px;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%235E34BF' fill-opacity='0.5' d='M0,160L60,176C120,192,240,224,360,229.3C480,235,600,213,720,192C840,171,960,149,1080,154.7C1200,160,1320,192,1380,208L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") repeat-x;
-            animation: wave 10s linear infinite;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.6s;
         }
 
-        @keyframes wave {
-            0% { background-position-x: 0; }
-            100% { background-position-x: 1440px; }
+        .upload-btn:hover::before {
+            left: 100%;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px rgba(0,119,182,0.3);
         }
     </style>
 </head>
 <body>
-    <div class="ticket">
-        <div class="ticket-left">
-            <img src="WeS.png" alt="Logo" class="logo">
-            <div class="wave"></div>
-        </div>
-        <div class="ticket-right">
-            <div>
-                <h1 class="event-title">Mind Care Event</h1>
-                <p class="event-details">Wallace and Schuldenberg - Civico 377</p>
-                <p class="event-details">28/11/24 - 22:30</p>
-                <p class="mental-health-text">Un evento per promuovere la salute mentale. Le aziende partecipanti contribuiranno con donazioni all'ospedale PillBox Hill.</p>
+    <div class="ticket-container">
+        <div class="ticket">
+            <div class="ticket-left">
+               
+                <div class="logo-container">
+                    <img src="WeS.png" alt="Logo">
+                </div>
             </div>
-            <div>
+            <div class="ticket-right">
+                <div class="event-title">Evento Salute Mentale</div>
+                <div class="event-details">Wallace and Schuldenberg - Civico 377</div>
+                <div class="event-details">28/11/24 - 22:30</div>
                 <div class="price">$ 100</div>
-                <button class="imgbb-btn" onclick="uploadToImgBB()">Carica su ImgBB</button>
-                <div class="serial-number" id="serialNumber"></div>
+                <div class="donation-note">
+                    Le aziende partecipanti potranno contribuire facendo una donazione all'ospedale PillBox Hill. 
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script>
-        // Genera numero seriale
-        document.getElementById('serialNumber').textContent = 
-            'TICKET #' + Math.floor(Math.random() * 100000).toString().padStart(5, '0');
+    <button class="upload-btn" onclick="uploadToImgBB()">
+        Carica su ImgBB
+    </button>
 
+    <script>
         function uploadToImgBB() {
-            html2canvas(document.querySelector('.ticket')).then(canvas => {
+            const mainContent = document.querySelector('.ticket-container');
+            
+            html2canvas(mainContent, {
+                allowTaint: true,
+                useCORS: true,
+                scale: 2
+            }).then(canvas => {
                 const base64image = canvas.toDataURL("image/png");
                 
                 const formData = new FormData();
@@ -166,16 +217,9 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.data && data.data.url) {
-                        window.open(data.data.url, '_blank');
-                    } else {
-                        alert('Caricamento fallito');
-                    }
+                    window.open(data.data.url, '_blank');
                 })
-                .catch(error => {
-                    console.error('Errore:', error);
-                    alert('Errore nel caricamento');
-                });
+                .catch(error => console.error('Error:', error));
             });
         }
     </script>
