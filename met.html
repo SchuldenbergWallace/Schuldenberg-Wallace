@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Mind Care Event</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #f6f0ff, #e0d6ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .ticket {
+            width: 800px;
+            height: 350px;
+            background: linear-gradient(135deg, #ffffff, #f0e6ff);
+            border-radius: 20px;
+            box-shadow: 
+                0 15px 30px rgba(128, 64, 255, 0.2),
+                0 10px 20px rgba(128, 64, 255, 0.1);
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ticket-left {
+            width: 300px;
+            background: linear-gradient(45deg, #8A4FFF, #5E34BF);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            object-fit: contain;
+        }
+
+        .ticket-right {
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .event-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #5E34BF;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .event-details {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .mental-health-text {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 36px;
+            font-weight: 700;
+            color: #8A4FFF;
+            margin: 10px 0;
+        }
+
+        .imgbb-btn {
+            background: linear-gradient(45deg, #8A4FFF, #5E34BF);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-top: 20px;
+        }
+
+        .imgbb-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .serial-number {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%235E34BF' fill-opacity='0.5' d='M0,160L60,176C120,192,240,224,360,229.3C480,235,600,213,720,192C840,171,960,149,1080,154.7C1200,160,1320,192,1380,208L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") repeat-x;
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1440px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <div class="ticket-left">
+            <img src="WeS.png" alt="Logo" class="logo">
+            <div class="wave"></div>
+        </div>
+        <div class="ticket-right">
+            <div>
+                <h1 class="event-title">Mind Care Event</h1>
+                <p class="event-details">Wallace and Schuldenberg - Civico 377</p>
+                <p class="event-details">28/11/24 - 22:30</p>
+                <p class="mental-health-text">Un evento per promuovere la salute mentale. Le aziende partecipanti contribuiranno con donazioni all'ospedale PillBox Hill.</p>
+            </div>
+            <div>
+                <div class="price">$ 100</div>
+                <button class="imgbb-btn" onclick="uploadToImgBB()">Carica su ImgBB</button>
+                <div class="serial-number" id="serialNumber"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Genera numero seriale
+        document.getElementById('serialNumber').textContent = 
+            'TICKET #' + Math.floor(Math.random() * 100000).toString().padStart(5, '0');
+
+        function uploadToImgBB() {
+            html2canvas(document.querySelector('.ticket')).then(canvas => {
+                const base64image = canvas.toDataURL("image/png");
+                
+                const formData = new FormData();
+                formData.append("image", base64image.split(',')[1]);
+                
+                fetch("https://api.imgbb.com/1/upload?key=2970b606faf3351a85bd7467ab5efd5b", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data && data.data.url) {
+                        window.open(data.data.url, '_blank');
+                    } else {
+                        alert('Caricamento fallito');
+                    }
+                })
+                .catch(error => {
+                    console.error('Errore:', error);
+                    alert('Errore nel caricamento');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
