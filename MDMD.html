@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Peakville Sheriff's Department - Detective Terminal</title>
+    <style>
+        /* Previous styles remain the same */
+        body {
+            background-color: #000;
+            color: #A58041;
+            font-family: "Courier New", monospace;
+            padding: 20px;
+            margin: 0;
+        }
+        .terminal {
+            border: 2px solid #A58041;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(165, 128, 65, 0.2);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 1px solid #A58041;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+        .subject-image {
+            border: 1px solid #A58041;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #201810;
+        }
+        .description {
+            border: 1px solid #A58041;
+            padding: 15px;
+            background-color: rgba(165, 128, 65, 0.1);
+        }
+        .info-field {
+            margin-bottom: 15px;
+        }
+        .info-field label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        h1, h2 {
+            margin: 0;
+            padding: 0;
+            color: #A58041;
+        }
+        .blink {
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .status-line {
+            margin-top: 20px;
+            border-top: 1px solid #A58041;
+            padding-top: 10px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            background-color: #201810;
+            border: 1px solid #A58041;
+            color: #A58041;
+            font-family: "Courier New", monospace;
+            padding: 5px 10px;
+            margin-top: 5px;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #201810;
+            border: 1px solid #A58041;
+            color: #A58041;
+            cursor: pointer;
+            margin-top: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .classification {
+            text-align: center;
+            margin: 10px 0;
+            padding: 5px;
+            border: 1px solid #A58041;
+            background-color: #201810;
+        }
+        .case-files {
+            margin-top: 20px;
+            border-top: 1px solid #A58041;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal" id="capture">
+        <div class="header">
+            <h1>PEAKVILLE SHERIFF'S DEPARTMENT</h1>
+            <p>ARCHIVIO DETECTIVE - CLASSIFICATO</p>
+            <div class="classification">
+                <p class="blink">>_ LIVELLO AUTORIZZAZIONE 4 RICHIESTO</p>
+                <p>INFORMAZIONI RISERVATE</p>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="left-panel">
+                <h2>CALVIN HARRIS</h2>
+                <div class="subject-image">
+                    <img src="" alt="Detective placeholder" />
+                </div>
+                
+                <div class="info-field">
+                    <label>NUMERO DISTINTIVO:</label>
+                    <input type="text" value="4478-B" readonly>
+                </div>
+
+                <div class="info-field">
+                    <label>DIPARTIMENTO:</label>
+                    <input type="text" value="Omicidi - Chicago PD (precedente)" readonly>
+                </div>
+
+                <div class="info-field">
+                    <label>ANNI DI SERVIZIO:</label>
+                    <input type="text" value="15 anni" readonly>
+                </div>
+            </div>
+            
+            <div class="right-panel">
+                <div class="info-field">
+                    <label>NOME:</label>
+                    <input type="text" value="CALVIN HARRIS" readonly>
+                </div>
+
+                <div class="info-field">
+                    <label>GRADO:</label>
+                    <input type="text" value="Detective Sergente" readonly>
+                </div>
+
+                <div class="info-field">
+                    <label>SPECIALIZZAZIONE:</label>
+                    <input type="text" value="Omicidi Seriali e Crimini Violenti" readonly>
+                </div>
+
+                <div class="info-field">
+                    <label>PROFILO CARATTERIALE:</label>
+                    <textarea readonly>Metodico e riflessivo. Tendenza all'isolamento ma eccellenti capacità analitiche. Spiccata empatia verso le vittime che talvolta influenza il suo coinvolgimento emotivo nei casi. Preferisce lavorare da solo ma ha dimostrato buone capacità di leadership quando necessario. Occasionali episodi di insonnia legati allo stress dei casi più complessi.</textarea>
+                </div>
+
+                <div class="info-field">
+                    <label>INCARICHI ATTUALI:</label>
+                    <textarea readonly>Trasferimento a Peakville PD - Supervisione Dipartimento Omicidi
+Consulente speciale per cold case
+Formatore per nuovi detective</textarea>
+                </div>
+
+                <div class="info-field">
+                    <label>RICONOSCIMENTI & RISULTATI:</label>
+                    <textarea readonly>1975 - Medaglia al Valore per l'arresto del "Killer del Loop" di Chicago
+1974 - Encomio per la risoluzione del caso Morrison (collegato alla criminalità organizzata)
+1973 - Riconoscimento speciale FBI per la collaborazione nel caso dei rapimenti di Springfield
+1971 - Menzione d'onore per il salvataggio di tre ostaggi durante una rapina in banca
+1969 - Promozione a Detective per meriti sul campo</textarea>
+                </div>
+
+                <div class="case-files">
+                    <h2>STORIA CASI</h2>
+                    <textarea readonly>1977 - Caso "Heartland Strangler": Risoluzione di una serie di omicidi collegati tra Illinois e Indiana. Collaborazione con FBI.
+
+1976 - Indagine "Family Man": Smantellamento di un'organizzazione criminale che utilizzava attività familiari come copertura per il traffico di droga. Collegamento con il caso French Connection.
+
+1975 - "Killer del Loop": Cattura di un serial killer che aveva terrorizzato Chicago per 18 mesi. 5 vittime confermate.
+
+1974 - Caso Morrison: Indagine che ha portato all'arresto di tre membri di spicco della famiglia criminale O'Banion.
+
+1973 - "Springfield Kidnappings": Serie di rapimenti collegati a una setta religiosa. Collaborazione con Behavioral Science Unit FBI.
+
+NOTE: Il detective ha richiesto il trasferimento a Peakville citando la necessità di un ambiente più tranquillo dopo l'intensità del caso "Heartland Strangler". Valutazione psicologica positiva ma consigliato monitoraggio dello stress post-traumatico.</textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status-line">
+            <span class="blink">></span> TERMINALE ATTIVO | LIVELLO ACCESSO: 4 | DATA: 1978-07-17 | ORA: 23:59:59
+        </div>
+    </div>
+
+    <button id="downloadBtn" class="download-btn">SCARICA PROFILO DETECTIVE</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            html2canvas(document.getElementById('capture')).then(function(canvas) {
+                const link = document.createElement('a');
+                link.download = 'detective_profile.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>
