@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @font-face {
+            font-family: 'VaultTec';
+            src: url('data:font/woff2;charset=utf-8;base64,d09GMgABAAAAAAS4AAsAAAAACXwAAARpAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDMgqFXIUGATYCJAMUCwwABCAFhGcHgQIbTQlRlFBOH9nPw7HrLRE1Nqq1vP4h4pj43/z27r4ZY5NoPB2PRCKRUvGEROgkCZ1EpWcjZP7/d81/wCXtAEu2QKc+OzGT6Z5fC2zL5rA5VMyhtGkT6A3wH/9d/rO8wOazvtsByb5Axy+pF2iAPRKd3ijwDuQO5B/GLi7jfALdFhWCI3FJDXBQmMcF4kkrCnBIKVrhhoausrFwiBeoulNzeAt4738//sNycJBUmbnq7CExB4nf4W8vrf7XUlYRoOVnh3Ufmc0AhXhRar6DBwQ38JDuKttzgG6dJN/hby+y/f//P6EimBZ0nf7wKEkWREbWboEdDyp8h0WJ+N6JEvO9sFGinGZxCM2m9NtLT6IH4BOM7YGZicQkVQ0/Vcvlcu0lm5eRbtjphezs4oX8VaIguba8tBYrsw0Y4jS0dJJWqyXtWlutJkLI6dQLV55dyVy5fJ5QEgc21K95/foqrtYgV4GsX/P69XVCYa2qhihwYFVl5erVlauJwvp1T1+9unH9+k2iICPj8qqVV64UFt5YfePVjauvX98IVhcurn5FGujQdDIswW7VtbKcqnr0KL6uqspnrAdDuDEVqjQjGa1W4lirK/XWqaoe/bseIKoRVXt164qP1jx+3Lxbh0kl5GQjp+Ge8B49elSPvEE+pN8fPyYVp+SR90nYVE0nH0/jBwBKlpbBf+T+I+P+I/rJyP5zI/FKAf6jsX8HTOrZhMnkpDHY/zPx16SdpS+M/VvG/i8eB+FfMvRXAf+j3X9sHPEfh+NB1ASQ6sLrj3trc/B3pXo8pXruUnVXwOUE3WkAFO8D+5R1o5rUFO4LmF9Yx/xzfn62C6Arg9BogYROY8gsm0UFPTZDVaddoNumlvM9BkWKFHXtAkKfz5D0eA9Zny+igu8wqDTmJ1T1BQzdLkR27DEoyAFlQluQ5zQn0lhW5M6NYcpc0Jt0MFw6YbYoF7y+cUJ7OSe8IU7GjSO5GCOCC0pnMNh9QEhICzxvAuUySGVoG3JdB3g2zx6o0XUakWkYpgQtEMdROULOkTGJrD1WiHPOMAwlJ5A3kQODi47w7UW54OkvnKBZOY7gGoXXUtwwJHdhGEJwAtFyEEwVD0AIciGShxmByiKQFIM2IZcr3YcNj82BUj6no5aUjctXtn8uN7rOg266R0qUqTJXeXF33KS50vjF/ooyu5k7MwEA') format('woff2');
+        }
+        
+        body {
+            background-color: #000;
+            color: #2ec900;
+            font-family: "VaultTec", "Courier New", monospace;
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            background-image: radial-gradient(circle at center, #001800 0%, #000000 100%);
+        }
+        .screen {
+            border: 3px solid #2ec900;
+            box-shadow: 0 0 30px rgba(46, 201, 0, 0.3);
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(0, 20, 0, 0.95);
+            position: relative;
+            overflow: hidden;
+        }
+        .screen::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+        }
+        .login-screen {
+            text-align: center;
+        }
+        .product-screen {
+            display: none;
+        }
+        .company-logo {
+            font-size: 48px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px #2ec900;
+            letter-spacing: 3px;
+        }
+        .blink {
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        input {
+            background-color: #001100;
+            border: 2px solid #2ec900;
+            color: #2ec900;
+            padding: 10px 15px;
+            margin: 8px;
+            font-family: "VaultTec", "Courier New", monospace;
+            width: 250px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #002200;
+            border: 2px solid #2ec900;
+            color: #2ec900;
+            padding: 12px 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-family: "VaultTec", "Courier New", monospace;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background-color: #2ec900;
+            color: #000;
+            box-shadow: 0 0 15px #2ec900;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .stats {
+            border: 2px solid #2ec900;
+            padding: 15px;
+            margin-top: 10px;
+            background-color: rgba(0, 40, 0, 0.3);
+        }
+        .warning {
+            color: #ff4444;
+            margin-top: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #ff0000;
+            animation: warning-pulse 2s infinite;
+        }
+        @keyframes warning-pulse {
+            50% { text-shadow: 0 0 20px #ff0000; }
+        }
+        .status-line {
+            margin-top: 20px;
+            border-top: 2px solid #2ec900;
+            padding-top: 10px;
+            font-size: 14px;
+        }
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                rgba(46, 201, 0, 0.2),
+                transparent
+            );
+            animation: scanline 8s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="screen login-screen" id="loginScreen">
+        <div class="scanline"></div>
+        <div class="company-logo">J&J</div>
+        <h2>ACCESSO AL TERMINALE RICHIESTO</h2>
+        <p class="blink">> INSERIRE CREDENZIALI</p>
+        <div>
+            <input type="text" id="username" placeholder="NOME UTENTE" /><br>
+            <input type="password" id="password" placeholder="PASSWORD" />
+        </div>
+        <button onclick="login()">ACCEDI</button>
+        <div class="status-line">
+            <span class="blink">></span> CONNESSIONE SICURA STABILITA | J&J PHARMACEUTICALS
+        </div>
+    </div>
+
+    <div class="screen product-screen" id="productScreen">
+        <div class="scanline"></div>
+        <div class="company-logo">J&J</div>
+        <h1>DATABASE PRODOTTI: RUSH</h1>
+        <div class="grid">
+            <div>
+                <div class="product-image" style="text-align: center;">
+    <!-- Inserisci qui l'intero contenuto del primo artifact SVG -->
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Base della bottiglia -->
+        <path d="M80 180 L120 180 L130 60 L70 60 Z" fill="none" stroke="#00ff00" stroke-width="2"/>
+        
+        <!-- Collo della bottiglia -->
+        <path d="M85 60 L75 40 L75 30 L125 30 L125 40 L115 60" fill="none" stroke="#00ff00" stroke-width="2"/>
+        
+        <!-- Tappo -->
+        <rect x="75" y="20" width="50" height="10" fill="none" stroke="#00ff00" stroke-width="2"/>
+        
+        <!-- Logo RUSH -->
+        <text x="100" y="120" fill="#00ff00" font-family="monospace" font-size="24" text-anchor="middle">RUSH</text>
+        
+        <!-- Simbolo di pericolo -->
+        <path d="M90 140 L110 140 L100 160 Z" fill="none" stroke="#00ff00" stroke-width="2"/>
+        
+        <!-- Effetto energetico -->
+        <path d="M60 100 L70 100 M130 100 L140 100" stroke="#00ff00" stroke-width="2">
+            <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+        </path>
+        <path d="M60 110 L70 110 M130 110 L140 110" stroke="#00ff00" stroke-width="2">
+            <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite" begin="0.2s"/>
+        </path>
+        <path d="M60 90 L70 90 M130 90 L140 90" stroke="#00ff00" stroke-width="2">
+            <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite" begin="0.4s"/>
+        </path>
+    </svg>
+</div>
+                <div class="stats">
+                    <h3>SPECIFICHE PRODOTTO</h3>
+                    <p>FORMATO: Fiala/Liquido</p>
+                    <p>DOSAGGIO: 5ml per unità</p>
+                    <p>DURATA: 60 secondi</p>
+                    <p>CONSERVAZIONE: 24 mesi</p>
+                </div>
+            </div>
+            <div>
+                <div class="stats">
+                    <h3>DESCRIZIONE PRODOTTO</h3>
+                    <p>Composto chimico sintetico progettato per il potenziamento immediato delle capacità fisiche. Commercializzato come "integratore per prestazioni atletiche".</p>
+                    
+                    <h3>EFFETTI</h3>
+                    <p>- VELOCITÀ POTENZIATA: Aumento significativo della velocità di movimento</p>
+                    <p>- BOOST RESISTENZA: Consumo energetico ridotto durante attività fisiche</p>
+                    <p>- RIFLESSI MIGLIORATI: Tempo di reazione e coordinazione aumentati</p>
+                    
+                    <h3>EFFETTI COLLATERALI</h3>
+                    <p>- Affaticamento post-utilizzo</p>
+                    <p>- Compromissione temporanea del movimento</p>
+                    <p>- Crash fisico dopo la durata dell'effetto</p>
+                </div>
+            </div>
+        </div>
+        <div class="warning">
+            !!! INFORMAZIONI CLASSIFICATE - SOLO PERSONALE AUTORIZZATO !!!
+        </div>
+        <div class="status-line">
+            <span class="blink">></span> ACCESSO DATABASE ATTIVO | LIVELLO AUTORIZZAZIONE: RISTRETTO
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'owenmoore' && password === '12345') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('productScreen').style.display = 'block';
+            } else {
+                alert('ACCESSO NEGATO');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Base della bottiglia -->
+  <path d="M80 180 L120 180 L130 60 L70 60 Z" fill="none" stroke="#00ff00" stroke-width="2"/>
+  
+  <!-- Collo della bottiglia -->
+  <path d="M85 60 L75 40 L75 30 L125 30 L125 40 L115 60" fill="none" stroke="#00ff00" stroke-width="2"/>
+  
+  <!-- Tappo -->
+  <rect x="75" y="20" width="50" height="10" fill="none" stroke="#00ff00" stroke-width="2"/>
+  
+  <!-- Logo RUSH -->
+  <text x="100" y="120" fill="#00ff00" font-family="monospace" font-size="24" text-anchor="middle">RUSH</text>
+  
+  <!-- Simbolo di pericolo -->
+  <path d="M90 140 L110 140 L100 160 Z" fill="none" stroke="#00ff00" stroke-width="2"/>
+  
+  <!-- Effetto energetico -->
+  <path d="M60 100 L70 100 M130 100 L140 100" stroke="#00ff00" stroke-width="2">
+    <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+  </path>
+  <path d="M60 110 L70 110 M130 110 L140 110" stroke="#00ff00" stroke-width="2">
+    <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite" begin="0.2s"/>
+  </path>
+  <path d="M60 90 L70 90 M130 90 L140 90" stroke="#00ff00" stroke-width="2">
+    <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite" begin="0.4s"/>
+  </path>
+</svg>
